@@ -33,8 +33,10 @@ class TimesheetFragment:Fragment() {
         val root: View = binding.root
 
         // Initialize UI components
-        val startDateTimeEditText: EditText = binding.startDateTimeEditText
-        val endDateTimeEditText: EditText = binding.endDateTimeEditText
+        val startTimeEditText: EditText = binding.startTimeEditText
+        val endTimeEditText: EditText = binding.endTimeEditText
+        val startDateEditText: EditText = binding.startDateEditText
+        val endDateEditText: EditText = binding.endDateEditText
         val categorySpinner: Spinner = binding.categorySpinner
         val descriptionEditText: EditText = binding.descriptionEditText
         val photoUrlEditText: EditText = binding.photoUrlEditText
@@ -42,8 +44,10 @@ class TimesheetFragment:Fragment() {
 
         // Handle save button click
         saveButton.setOnClickListener {
-            val startDateTime = startDateTimeEditText.text.toString()
-            val endDateTime = endDateTimeEditText.text.toString()
+            val startTimeEditText = startTimeEditText.text.toString()
+            val endTimeEditText = binding.endTimeEditText.text.toString()
+            val startDateEditText = binding.startDateEditText.text.toString()
+            val endDateEditText = binding.endDateEditText.text.toString()
             val category = categorySpinner.selectedItem.toString()
             val description = descriptionEditText.text.toString()
             val photoUrl = photoUrlEditText.text.toString()
