@@ -23,10 +23,4 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 
-    <fragment
-        android:id="@+id/nav_category"
-        android:name="com.example.opsc7311_paradoxplanner_poe.ui.category.CategoryFragment"
-        android:label="@string/menu_category"
-        tools:layout="@layout/fragment_slideshow" />
-
 </navigation>

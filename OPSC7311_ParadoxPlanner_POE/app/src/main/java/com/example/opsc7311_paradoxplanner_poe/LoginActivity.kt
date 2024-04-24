@@ -3,6 +3,7 @@ package com.example.opsc7311_paradoxplanner_poe
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -72,6 +73,12 @@ class LoginActivity : AppCompatActivity() {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
                 }
+                progressBar.visibility = ProgressBar.GONE
+            }
+            .addOnFailureListener { exception ->
+                // Log the exception to understand why the sign-in failed
+                Log.e("LoginActivity", "Login failed", exception)
+                Toast.makeText(this, "Login failed: ${exception.message}", Toast.LENGTH_SHORT).show()
                 progressBar.visibility = ProgressBar.GONE
             }
     }
