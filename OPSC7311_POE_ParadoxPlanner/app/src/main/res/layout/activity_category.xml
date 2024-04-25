@@ -9,13 +9,13 @@
     tools:context=".CategoryActivity">
 
     <EditText
-        android:id="@+id/categoryNameEditText"
+        android:id="@+id/editTextCategoryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Category Name" />
 
     <Button
-        android:id="@+id/createCategoryButton"
+        android:id="@+id/btnCreateCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Category" />

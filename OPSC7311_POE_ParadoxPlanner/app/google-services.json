@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "47858996556",
+    "project_id": "opsc7311-paradoxplanner-poe",
+    "storage_bucket": "opsc7311-paradoxplanner-poe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47858996556:android:9cc24db71709e5a1caebe9",
+        "android_client_info": {
+          "package_name": "com.example.opsc7311_poe_paradoxplanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqv7An6u-ZPc50u0wUwpzEV0mzdYff5OU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
