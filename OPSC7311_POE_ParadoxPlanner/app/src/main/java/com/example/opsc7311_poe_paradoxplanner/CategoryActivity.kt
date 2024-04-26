@@ -62,16 +62,10 @@ class CategoryActivity : AppCompatActivity() {
 
             // Update Firestore with new information
             auth.currentUser?.let { user ->
-                // Create a Student object with the updated information
-                val updatedCategory = Category(
-                    userId = user.uid,
-                    categoryName=categoryName
-                )
-
                 // Convert the Student object to a map and update Firestore
                 val userCategory = hashMapOf(
-                    "userId" to updatedCategory.userId,
-                    "categoryName" to updatedCategory.username,
+                    "userId" to user.uid,
+                    "categoryName" to categoryName
                 )
                 db.collection("categories").document(user.uid).set(userCategory, SetOptions.merge())
                     .addOnSuccessListener {
