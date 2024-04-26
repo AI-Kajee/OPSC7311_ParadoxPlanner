@@ -56,17 +56,17 @@
         android:hint="Photo URL" />
 
     <ImageView
-        android:id="@+id/profilePicture"
+        android:id="@+id/picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher_background" />
 
 
     <Button
-        android:id="@+id/btnUploadProfilePicture"
+        android:id="@+id/btnUploadPicture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload Profile Picture" />
+        android:text="Upload Picture" />
 
     <Button
         android:id="@+id/btnSave"

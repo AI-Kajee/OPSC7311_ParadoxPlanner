@@ -5,13 +5,9 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 
 class CategoryActivity : AppCompatActivity() {
 
@@ -26,7 +22,6 @@ class CategoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_category)
 
         auth = FirebaseAuth.getInstance()
@@ -35,49 +30,20 @@ class CategoryActivity : AppCompatActivity() {
         createCategoryButton = findViewById(R.id.btnCreateCategory)
         categoryNameEditText = findViewById(R.id.editTextCategoryName)
 
-
-        // Fetch user profile information from Firestore
-        auth.currentUser?.let { user ->
-            db.collection("users").document(user.uid).get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        val categoryName = document.getString("categoryName")
-
-                        // Populate the UI elements with the retrieved data
-                        categoryNameEditText.setText(categoryName)
-
-                    } else {
-                        Log.d(TAG, "No such document")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
-                }
-        }
-
-
         createCategoryButton.setOnClickListener {
             val categoryName = categoryNameEditText.text.toString()
-
-
-            // Update Firestore with new information
-            auth.currentUser?.let { user ->
-                // Convert the Student object to a map and update Firestore
-                val userCategory = hashMapOf(
-                    "userId" to user.uid,
-                    "categoryName" to categoryName
-                )
-                db.collection("categories").document(user.uid).set(userCategory, SetOptions.merge())
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Profile updated.", Toast.LENGTH_SHORT).show()
+            if (categoryName.isNotEmpty()) {
+                // Create a new category document in the 'categories' collection
+                db.collection("categories").add(hashMapOf("name" to categoryName))
+                    .addOnSuccessListener { documentReference ->
+                        Toast.makeText(this, "Category created: ${documentReference.id}", Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener { e ->
-                        Log.w(TAG, "Error updating document", e)
+                        Log.w(TAG, "Error creating category", e)
                     }
+            } else {
+                Toast.makeText(this, "Please enter a category name.", Toast.LENGTH_SHORT).show()
             }
         }
-
-
-
     }
 }
