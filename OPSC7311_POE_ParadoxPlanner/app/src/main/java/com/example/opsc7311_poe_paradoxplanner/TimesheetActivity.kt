@@ -1,5 +1,6 @@
 package com.example.opsc7311_poe_paradoxplanner
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -29,6 +30,7 @@ class TimesheetActivity : AppCompatActivity() {
     private lateinit var uploadPictureButton: Button
     private lateinit var saveButton: Button
     private lateinit var pictureImageView: ImageView
+    private lateinit var btnBack: Button
 
     companion object {
         private const val TAG = "TimesheetActivity"
@@ -74,6 +76,12 @@ class TimesheetActivity : AppCompatActivity() {
                 Toast.makeText(this, "Picture updated.", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Please enter a valid URL.", Toast.LENGTH_SHORT).show()
+            }
+
+            btnBack.setOnClickListener{
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
 
