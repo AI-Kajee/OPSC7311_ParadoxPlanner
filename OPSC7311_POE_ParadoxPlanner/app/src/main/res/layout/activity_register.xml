@@ -48,16 +48,56 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintVertical_bias="0.769" />
 
+<!--  <EditText-->
+<!--      android:id="@+id/email"-->
+<!--      android:layout_width="wrap_content"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:layout_marginTop="32dp"-->
+<!--      android:backgroundTint="#673AB7"-->
+<!--      android:ems="10"-->
+<!--      android:hint="email"-->
+<!--      android:inputType="textEmailAddress"-->
+<!--      android:minHeight="48dp"-->
+<!--      app:layout_constraintEnd_toEndOf="parent"-->
+<!--      app:layout_constraintHorizontal_bias="0.502"-->
+<!--      app:layout_constraintStart_toStartOf="parent"-->
+<!--      app:layout_constraintTop_toBottomOf="@+id/imageView3" />-->
+
+<!--  <EditText-->
+<!--      android:id="@+id/password"-->
+<!--      android:layout_width="wrap_content"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:layout_marginBottom="224dp"-->
+<!--      android:backgroundTint="#673AB7"-->
+<!--      android:ems="10"-->
+<!--      android:hint="password"-->
+<!--      android:inputType="textPassword"-->
+<!--      android:minHeight="48dp"-->
+<!--      app:layout_constraintBottom_toBottomOf="parent"-->
+<!--      app:layout_constraintEnd_toEndOf="parent"-->
+<!--      app:layout_constraintHorizontal_bias="0.502"-->
+<!--      app:layout_constraintStart_toStartOf="parent" />-->
+
   <EditText
       android:id="@+id/email"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:backgroundTint="#673AB7"
+      android:layout_marginTop="36dp"
+      android:background="@drawable/input_btnbg"
+      android:backgroundTint="@color/white"
+      android:drawableLeft="@android:drawable/sym_action_email"
+      android:drawablePadding="10dp"
       android:ems="10"
       android:hint="email"
       android:inputType="textEmailAddress"
       android:minHeight="48dp"
+      android:paddingLeft="20dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
       app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.502"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
@@ -65,12 +105,19 @@
       android:id="@+id/password"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="224dp"
-      android:backgroundTint="#673AB7"
+      android:layout_marginBottom="216dp"
+      android:background="@drawable/input_btnbg"
+      android:backgroundTint="@color/white"
+      android:drawableLeft="@android:drawable/ic_secure"
+      android:drawablePadding="10dp"
       android:ems="10"
       android:hint="password"
       android:inputType="textPassword"
       android:minHeight="48dp"
+      android:paddingLeft="20dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.502"
