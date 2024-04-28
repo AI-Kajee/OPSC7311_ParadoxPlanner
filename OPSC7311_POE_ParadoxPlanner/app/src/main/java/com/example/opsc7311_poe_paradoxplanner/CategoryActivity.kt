@@ -16,7 +16,7 @@ class CategoryActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var createCategoryButton: Button
     private lateinit var categoryNameEditText: EditText
-    private lateinit var btnBack: Button // Declaration of btnBack
+    private lateinit var btnBack: Button
 
     companion object {
         private const val TAG = "CategoryActivity"
@@ -31,21 +31,27 @@ class CategoryActivity : AppCompatActivity() {
 
         createCategoryButton = findViewById(R.id.btnCreateCategory)
         categoryNameEditText = findViewById(R.id.editTextCategoryName)
-        btnBack = findViewById(R.id.btnBack) // Initialization of btnBack
+        btnBack = findViewById(R.id.btnBack)
 
         createCategoryButton.setOnClickListener {
+            Log.d(TAG, "Create category button clicked")
+
             val categoryName = categoryNameEditText.text.toString()
             if (categoryName.isNotEmpty()) {
-                // Get the current user's ID
-                val userId = auth.currentUser?.uid
-                if (userId != null) {
-                    // Create a new category document in the 'categories' collection, associated with the user
-                    db.collection("categories").add(hashMapOf("name" to categoryName, "userId" to userId))
+                val user = auth.currentUser
+                if (user != null) {
+                    val categoryData = hashMapOf(
+                        "userId" to user.uid,
+                        "email" to user.email, // Include the user's email
+                        "categoryName" to categoryName
+                    )
+
+                    db.collection("categories").add(categoryData)
                         .addOnSuccessListener { documentReference ->
-                            Toast.makeText(this, "Category created: ${documentReference.id}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Category added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener { e ->
-                            Log.w(TAG, "Error creating category", e)
+                            Log.w(TAG, "Error adding category", e)
                         }
                 } else {
                     Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
@@ -55,7 +61,7 @@ class CategoryActivity : AppCompatActivity() {
             }
         }
 
-        btnBack.setOnClickListener{
+        btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

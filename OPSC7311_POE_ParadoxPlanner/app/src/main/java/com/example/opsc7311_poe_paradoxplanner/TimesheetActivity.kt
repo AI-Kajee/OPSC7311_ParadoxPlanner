@@ -54,18 +54,25 @@ class TimesheetActivity : AppCompatActivity() {
         descriptionEditText = findViewById(R.id.descriptionEditText)
         photoUrlEditText = findViewById(R.id.photoUrlEditText)
         pictureImageView = findViewById(R.id.picture)
+        btnBack = findViewById(R.id.btnBack)
 
         // Fetch categories from Firestore and populate the spinner
-        db.collection("categories").get()
-            .addOnSuccessListener { querySnapshot ->
-                val categories = querySnapshot.documents.map { it.getString("name")!! }
-                val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                categorySpinner.adapter = adapter
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "Error fetching categories: ", exception)
-            }
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            db.collection("categories").whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    val categories = querySnapshot.documents.map { it.getString("categoryName")!! }
+                    val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    categorySpinner.adapter = adapter
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "Error fetching categories: ", exception)
+                }
+        } else {
+            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
+        }
 
         // Handling button click for uploading profile picture
         uploadPictureButton.setOnClickListener {
@@ -76,12 +83,6 @@ class TimesheetActivity : AppCompatActivity() {
                 Toast.makeText(this, "Picture updated.", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Please enter a valid URL.", Toast.LENGTH_SHORT).show()
-            }
-
-            btnBack.setOnClickListener{
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
             }
         }
 
@@ -122,6 +123,12 @@ class TimesheetActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "All fields must be filled.", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        btnBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
