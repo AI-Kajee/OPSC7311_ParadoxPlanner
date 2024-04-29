@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/CategoryBack"
+    android:background="@drawable/categoryback"
     android:orientation="vertical"
     android:padding="16dp"
     android:paddingLeft="20dp"
@@ -40,7 +40,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.769" />
+        app:layout_constraintVertical_bias="0.769"
+        tools:ignore="UnknownIdInLayout" />
 
     <EditText
         android:id="@+id/editTextCategoryName"
@@ -104,6 +105,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/btnBack"
-        app:srcCompat="@drawable/Categorycool" />
+        app:srcCompat="@drawable/categorycool" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
