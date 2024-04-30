@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OPSC7311_POE_ParadoxPlanner</string>
+    <string name="todo" />
+    <string name="btnAdd" />
 </resources>
