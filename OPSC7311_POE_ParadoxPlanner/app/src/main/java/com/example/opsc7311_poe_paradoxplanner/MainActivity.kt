@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         val btnGoToCategoryActivity = findViewById<Button>(R.id.btnGoToCategoryActivity)
         val btnGoToTimesheetActivity = findViewById<Button>(R.id.btnGoToTimesheetActivity)
         val btnLogOut = findViewById<Button>(R.id.btnLogOut)
+        val btnTimeSheetList = findViewById<Button>(R.id.btnTimeSheetList)
 
         btnGoToCategoryActivity.setOnClickListener {
             val intent = Intent(this, CategoryActivity::class.java)
@@ -40,5 +41,9 @@ class MainActivity : AppCompatActivity() {
             finish() // Close the current activity
         }
 
+        btnTimeSheetList.setOnClickListener {
+            val intent = Intent(this, TimesheetListActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
