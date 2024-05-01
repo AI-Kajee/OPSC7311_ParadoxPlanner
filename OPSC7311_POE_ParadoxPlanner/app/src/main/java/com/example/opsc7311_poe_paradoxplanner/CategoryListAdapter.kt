@@ -7,23 +7,24 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoryListAdapter(private val categoryList: ArrayList<CategoryDC> ): RecyclerView.Adapter<CategoryListAdapter.MyViewHolder>() {
+class CategoryListAdapter(private val categoryList: ArrayList<CategoryDC>) :
+    RecyclerView.Adapter<CategoryListAdapter.MyViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryListAdapter.MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.category_list_item, parent, false)
         return CategoryListAdapter.MyViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: CategoryListAdapter.MyViewHolder, position: Int) {
-val category =categoryList [position]
-        holder.category.text = category.categoryName
+        val category = categoryList[position]
+        holder.category.text = "${category.categoryName} - Total Hours: ${category.totalHours}"
     }
-// val entry = entryList[position]
+
     override fun getItemCount(): Int {
-       return categoryList.size
-
+        return categoryList.size
     }
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val category : TextView =itemView.findViewById(R.id.tvCategory)
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val category: TextView = itemView.findViewById(R.id.tvCategory)
     }
 }

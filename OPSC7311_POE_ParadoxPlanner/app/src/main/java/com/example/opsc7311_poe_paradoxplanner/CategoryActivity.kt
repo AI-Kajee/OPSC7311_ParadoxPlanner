@@ -39,11 +39,12 @@ class CategoryActivity : AppCompatActivity() {
             val categoryName = categoryNameEditText.text.toString()
             if (categoryName.isNotEmpty()) {
                 val user = auth.currentUser
-                if (user != null) {
+                if (user!= null) {
                     val categoryData = hashMapOf(
                         "userId" to user.uid,
                         "email" to user.email, // Include the user's email
-                        "categoryName" to categoryName
+                        "categoryName" to categoryName,
+                        "totalHours" to 0.0 // Set total hours to 0 for each new category
                     )
 
                     db.collection("categories").add(categoryData)
