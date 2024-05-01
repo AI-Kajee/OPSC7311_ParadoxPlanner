@@ -13,6 +13,7 @@
         android:text="Go to Category Activity"
         app:layout_constraintBottom_toTopOf="@+id/btnGoToTimesheetActivity"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +42,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time Sheet List"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="289dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btnGoToTimesheetActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoToCategoryActivity" />
+
+    <Button
+        android:id="@+id/btnCategoryList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category List"
+        app:layout_constraintBottom_toTopOf="@+id/btnGoToCategoryActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

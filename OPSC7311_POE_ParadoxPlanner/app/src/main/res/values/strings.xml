@@ -11,4 +11,6 @@
     <string name="_12_01_2024">12/01/2024</string>
     <string name="end_date">End Date:</string>
     <string name="_25_04_2024">25/04/2024</string>
+    <string name="category_name">Category Name:</string>
+    <string name="dogs">Dogs</string>
 </resources>

@@ -5,15 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/categorylist"
     tools:context=".CategoryListActivity">
 
     <TextView
         android:id="@+id/PP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_width="135dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="72dp"
         android:fontFamily="sans-serif-black"
         android:text="Categories"
+        android:textColor="#D0C6D1"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,12 +24,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="411dp"
-        android:layout_height="595dp"
-        android:layout_marginBottom="64dp"
+        android:id="@+id/categoryListRecyclerView"
+        android:layout_width="408dp"
+        android:layout_height="572dp"
+        android:layout_marginBottom="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnBackm"
+        android:layout_width="81dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/input_btnbg"
+        android:backgroundTint="#8E7B7B"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryListRecyclerView"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

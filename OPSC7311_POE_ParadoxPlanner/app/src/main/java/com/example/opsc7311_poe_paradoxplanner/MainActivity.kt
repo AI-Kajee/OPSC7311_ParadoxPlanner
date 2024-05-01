@@ -1,5 +1,6 @@
 package com.example.opsc7311_poe_paradoxplanner
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -11,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         val btnGoToTimesheetActivity = findViewById<Button>(R.id.btnGoToTimesheetActivity)
         val btnLogOut = findViewById<Button>(R.id.btnLogOut)
         val btnTimeSheetList = findViewById<Button>(R.id.btnTimeSheetList)
+        val btnCategoryList= findViewById<Button>(R.id.btnCategoryList)
 
         btnGoToCategoryActivity.setOnClickListener {
             val intent = Intent(this, CategoryActivity::class.java)
@@ -45,5 +48,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, TimeSheetListActivity::class.java)
             startActivity(intent)
         }
+
+        btnCategoryList.setOnClickListener {
+            val intent = Intent(this, CategoryListActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }
