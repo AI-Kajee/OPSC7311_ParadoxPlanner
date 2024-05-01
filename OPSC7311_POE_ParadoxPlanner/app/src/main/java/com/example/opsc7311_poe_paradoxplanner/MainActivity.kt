@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnTimeSheetList.setOnClickListener {
-            val intent = Intent(this, TimesheetListActivity::class.java)
+            val intent = Intent(this, TimeSheetListActivity::class.java)
             startActivity(intent)
         }
     }
