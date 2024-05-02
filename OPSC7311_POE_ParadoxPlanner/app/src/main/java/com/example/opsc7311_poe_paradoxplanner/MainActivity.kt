@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         val btnLogOut = findViewById<Button>(R.id.btnLogOut)
         val btnTimeSheetList = findViewById<Button>(R.id.btnTimeSheetList)
         val btnCategoryList= findViewById<Button>(R.id.btnCategoryList)
+val btnGoalTimer = findViewById<Button>(R.id.btnGoalTimer)
 
         btnGoToCategoryActivity.setOnClickListener {
             val intent = Intent(this, CategoryActivity::class.java)
@@ -34,7 +35,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, TimesheetActivity::class.java)
             startActivity(intent)
         }
-
+        btnGoalTimer.setOnClickListener {
+            val intent = Intent(this, GoalTimer::class.java)
+            startActivity(intent)
+        }
         btnLogOut.setOnClickListener {
             auth.signOut() // Sign out the user
             Toast.makeText(this, "Logged out successfully.", Toast.LENGTH_SHORT).show()

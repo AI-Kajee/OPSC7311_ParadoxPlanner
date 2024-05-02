@@ -13,4 +13,16 @@
     <string name="_25_04_2024">25/04/2024</string>
     <string name="category_name">Category Name:</string>
     <string name="dogs">Dogs</string>
+    <string name="select_project" />
+    <string name="select_task" />
+    <string name="startss" />
+    <string name="stopss" />
+    <string name="stops">string</string>
+    <string name="starts">string</string>
+    <string name="max_goals">Max Goals</string>
+    <string name="enter_max_goals">Enter max goals</string>
+    <string name="min_goals">Min Goals</string>
+    <string name="enter_min_goals">Enter min goals</string>
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
 </resources>

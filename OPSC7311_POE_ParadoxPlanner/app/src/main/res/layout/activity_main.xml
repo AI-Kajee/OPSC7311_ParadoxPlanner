@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGoToTimesheetActivity"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.736" />
 
     <Button
         android:id="@+id/btnGoToTimesheetActivity"
@@ -60,7 +60,21 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGoToCategoryActivity"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.285" />
+
+    <Button
+        android:id="@+id/btnGoalTimer"
+        android:layout_width="409dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rectangle_button"
+        android:text="Goal Timer Screen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCategoryList"
+        app:layout_constraintVertical_bias="0.234" />
 
     <Button
         android:id="@+id/btnGoToCategoryActivity"
@@ -74,7 +88,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCategoryList"
-        app:layout_constraintVertical_bias="0.037" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView5"
