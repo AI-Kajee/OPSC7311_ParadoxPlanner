@@ -3,11 +3,9 @@ package com.example.opsc7311_poe_paradoxplanner
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.SeekBar
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -19,21 +17,22 @@ class CategoryListActivity : AppCompatActivity() {
     private lateinit var categoryDC: ArrayList<CategoryDC>
     private lateinit var categoryListAdapter: CategoryListAdapter
     private lateinit var db: FirebaseFirestore
-    private lateinit var btnBackm : Button
+    private lateinit var btnBackm: Button
+    private lateinit var categorySeekBar: SeekBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_category_list)
 
         categoryListRecyclerView = findViewById(R.id.categoryListRecyclerView)
         categoryListRecyclerView.layoutManager = LinearLayoutManager(this)
         categoryListRecyclerView.setHasFixedSize(true)
         btnBackm = findViewById(R.id.btnBackm)
+        categorySeekBar = findViewById(R.id.categorySeekBar)
 
         categoryDC = arrayListOf()
 
-        categoryListAdapter = CategoryListAdapter(categoryDC)
+        categoryListAdapter = CategoryListAdapter(categoryDC, 0.0) // Initialize with 0.0 max hours
 
         categoryListRecyclerView.adapter = categoryListAdapter
 
@@ -45,6 +44,24 @@ class CategoryListActivity : AppCompatActivity() {
             finish()
         }
 
+        // Set up SeekBar listener
+        categorySeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val maxHours = progress.toDouble() // Adjust this multiplier based on your needs
+                categoryListAdapter.maxHours = maxHours
+                categoryListAdapter.notifyDataSetChanged() // Notify the adapter of the changes
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // Handle when the user starts moving the SeekBar
+                Toast.makeText(this@CategoryListActivity, "Started moving SeekBar", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // Handle when the user stops moving the SeekBar
+                Toast.makeText(this@CategoryListActivity, "Stopped moving SeekBar", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun EventChangeListener() {
