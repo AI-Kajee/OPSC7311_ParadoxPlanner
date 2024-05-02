@@ -1,5 +1,7 @@
 package com.example.opsc7311_poe_paradoxplanner
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Calendar
 
 class TimesheetActivity : AppCompatActivity() {
 
@@ -56,9 +59,13 @@ class TimesheetActivity : AppCompatActivity() {
         pictureImageView = findViewById(R.id.picture)
         btnBack = findViewById(R.id.btnBack)
 
+        // Initialize date and time picker listeners
+        initializeDatePickers()
+        initializeTimePickers()
+
         // Fetch categories from Firestore and populate the spinner
         val userId = auth.currentUser?.uid
-        if (userId != null) {
+        if (userId!= null) {
             db.collection("categories").whereEqualTo("userId", userId)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
@@ -115,9 +122,11 @@ class TimesheetActivity : AppCompatActivity() {
                     db.collection("timesheets").document(user.uid).collection("entries").add(timesheetEntry)
                         .addOnSuccessListener { documentReference ->
                             Log.d(TAG, "Timesheet entry saved with ID: ${documentReference.id}")
+                            Toast.makeText(this, "Timesheet entry has been successfully created.", Toast.LENGTH_LONG).show()
                         }
                         .addOnFailureListener { exception ->
                             Log.d(TAG, "Error saving timesheet entry: ", exception)
+                            Toast.makeText(this, "Failed to create timesheet entry.", Toast.LENGTH_LONG).show()
                         }
                 }
             } else {
@@ -129,6 +138,43 @@ class TimesheetActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    private fun initializeDatePickers() {
+        startDateEditText.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            DatePickerDialog(this, { _, year, monthOfYear, dayOfMonth ->
+                calendar.set(year, monthOfYear, dayOfMonth)
+                startDateEditText.setText("${calendar.get(Calendar.YEAR)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.DAY_OF_MONTH)}")
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
+        }
+
+        endDateEditText.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            DatePickerDialog(this, { _, year, monthOfYear, dayOfMonth ->
+                calendar.set(year, monthOfYear, dayOfMonth)
+                endDateEditText.setText("${calendar.get(Calendar.YEAR)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.DAY_OF_MONTH)}")
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
+        }
+    }
+
+    private fun initializeTimePickers() {
+        startTimeEditText.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            TimePickerDialog(this, { _, hourOfDay, minute ->
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                calendar.set(Calendar.MINUTE, minute)
+                startTimeEditText.setText("${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}")
+            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show()
+        }
+        endTimeEditText.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            TimePickerDialog(this, { _, hourOfDay, minute ->
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                calendar.set(Calendar.MINUTE, minute)
+                endTimeEditText.setText("${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}")
+            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show()
         }
     }
 }
