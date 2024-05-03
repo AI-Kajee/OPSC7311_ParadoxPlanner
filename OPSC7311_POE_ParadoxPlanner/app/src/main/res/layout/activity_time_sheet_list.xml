@@ -22,16 +22,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <SeekBar
+        android:id="@+id/timesheetSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:max="12"
+        android:progress="0"
+        android:progressTint="@color/black"
+        android:thumbTint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PP"
+        app:layout_constraintBottom_toTopOf="@+id/timeSheetRecyclerView" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/timeSheetRecyclerView"
-        android:layout_width="413dp"
-        android:layout_height="599dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timesheetSeekBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.537" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnBack"

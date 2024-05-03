@@ -19,6 +19,15 @@ class CategoryListAdapter(private val categoryList: ArrayList<CategoryDC>, var m
         return MyViewHolder(itemView)
     }
 
+    fun updateCategories(targetTotalHours: Double) {
+        // Filter the categories based on the targetTotalHours
+        val filteredCategories = categoryList.filter { it.totalHours == targetTotalHours }
+        // Update the adapter with the filtered list
+        categoryList.clear()
+        categoryList.addAll(filteredCategories)
+        notifyDataSetChanged() // Notify the adapter that the data has changed
+    }
+
     override fun onBindViewHolder(holder: CategoryListAdapter.MyViewHolder, position: Int) {
         val category = categoryList[position]
         if (category.totalHours <= maxHours) {

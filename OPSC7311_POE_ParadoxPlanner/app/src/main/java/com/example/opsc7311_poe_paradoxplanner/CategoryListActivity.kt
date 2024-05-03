@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class CategoryListActivity : AppCompatActivity() {
     private lateinit var categoryListRecyclerView: RecyclerView
@@ -47,9 +48,12 @@ class CategoryListActivity : AppCompatActivity() {
         // Set up SeekBar listener
         categorySeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val maxHours = progress.toDouble() // Adjust this multiplier based on your needs
-                categoryListAdapter.maxHours = maxHours
-                categoryListAdapter.notifyDataSetChanged() // Notify the adapter of the changes
+                // Convert the SeekBar's progress to a Double representing the total hours
+                val targetTotalHours = progress.toDouble()
+                // Display the current SeekBar value
+                Toast.makeText(this@CategoryListActivity, "Current SeekBar Value: $targetTotalHours", Toast.LENGTH_SHORT).show()
+                // Fetch categories from Firestore where totalHours equals the SeekBar's value
+                fetchCategories(targetTotalHours)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -64,30 +68,35 @@ class CategoryListActivity : AppCompatActivity() {
         })
     }
 
-    private fun EventChangeListener() {
+    private fun fetchCategories(targetTotalHours: Double) {
         db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser!= null) {
-            db.collection("categories")
+            val query = db.collection("categories")
                 .whereEqualTo("userId", currentUser.uid) // Filter categories by the current user's ID
-                .addSnapshotListener { value, error ->
-                    if (error!= null) {
-                        // Handle error
-                        return@addSnapshotListener
-                    }
-
-                    value?.let { snapshot ->
-                        categoryDC.clear()
-                        for (document in snapshot.documents) {
-                            val category = document.toObject(CategoryDC::class.java)
-                            category?.let { categoryDC.add(it) }
-                        }
-                        categoryListAdapter.notifyDataSetChanged()
-                    }
+                .whereEqualTo("totalHours", targetTotalHours) // Filter categories where totalHours equals the SeekBar's value
+            query.addSnapshotListener { value, error ->
+                if (error!= null) {
+                    // Handle error
+                    return@addSnapshotListener
                 }
+
+                value?.let { snapshot ->
+                    categoryDC.clear()
+                    for (document in snapshot.documents) {
+                        val category = document.toObject(CategoryDC::class.java)
+                        category?.let { categoryDC.add(it) }
+                    }
+                    categoryListAdapter.notifyDataSetChanged()
+                }
+            }
         } else {
             // Handle case where no user is logged in
             Toast.makeText(this, "No user is logged in.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun EventChangeListener() {
+        // Your existing EventChangeListener code
     }
 }
