@@ -14,7 +14,7 @@ Welcome to Paradox Planner, your ultimate tool for organizing tasks, tracking ti
 
 To get started with Paradox Planner, follow these steps:
 
-1. **Clone the Repository**: Clone this repository to your local machine using `git clone https://github.com/your-username/opsc7311_poe_paradoxplanner.git`
+1. **Clone the Repository**: Clone this repository to your local machine using `git clone (https://github.com/AI-Kajee/OPSC7311_ParadoxPlanner/tree/main)`
 2. **Open the Project**: Open the project in Android Studio.
 3. **Run the App**: Build and run the app on an emulator or a physical device.
 
