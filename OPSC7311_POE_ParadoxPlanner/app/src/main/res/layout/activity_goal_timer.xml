@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/categorylist"
     android:orientation="vertical"
     android:padding="16dp">
 
     <!-- Project Spinner -->
+    <TextView
+        android:id="@+id/PP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif-black"
+        android:text="GOAL TIMER"
+        android:textColor="#C5B9B9"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
     <Spinner
         android:id="@+id/spinnerProject"
         android:layout_width="match_parent"
@@ -79,26 +91,26 @@
             android:id="@+id/chronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textSize="24sp" />
 
         <!-- Start Button -->
         <Button
             android:id="@+id/btnStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:layout_gravity="center_horizontal" />
+            android:text="@string/start" />
 
         <!-- Stop Button -->
         <Button
             android:id="@+id/btnStop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/stop"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:layout_gravity="center_horizontal" />
+            android:text="@string/stop" />
     </LinearLayout>
 
 </LinearLayout>
