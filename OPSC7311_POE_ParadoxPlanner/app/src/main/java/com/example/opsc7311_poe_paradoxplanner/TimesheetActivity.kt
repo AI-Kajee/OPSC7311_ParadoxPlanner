@@ -81,6 +81,7 @@ class TimesheetActivity : AppCompatActivity() {
             Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
         }
 
+
         // Handling button click for uploading profile picture
         uploadPictureButton.setOnClickListener {
             val url = photoUrlEditText.text.toString()

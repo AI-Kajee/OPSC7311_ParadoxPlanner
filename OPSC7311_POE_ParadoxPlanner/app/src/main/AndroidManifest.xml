@@ -16,6 +16,9 @@
         android:theme="@style/Theme.OPSC7311_POE_ParadoxPlanner"
         tools:targetApi="31">
         <activity
+            android:name=".EditTimesheetEntry"
+            android:exported="false" />
+        <activity
             android:name=".GoalTimer"
             android:exported="false" />
         <activity

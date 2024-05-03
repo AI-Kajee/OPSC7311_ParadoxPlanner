@@ -14,30 +14,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 
-class TimeSheetListActivity : AppCompatActivity() {
-    //userArrayList: ArrayList<User>
+class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickListener {
     private lateinit var timeSheetRecyclerView: RecyclerView
     private lateinit var entryArrayList: ArrayList<TimesheetEntry>
     private lateinit var timeSheetAdapter: TimeSheetAdapter
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var btnBack: Button
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_time_sheet_list)
-//
-//        timeSheetRecyclerView = findViewById(R.id.timeSheetRecyclerView)
-//        timeSheetRecyclerView.layoutManager = LinearLayoutManager(this)
-//        timeSheetRecyclerView.setHasFixedSize(true)
-//
-//        entryArrayList = arrayListOf()
-//        timeSheetAdapter = TimeSheetAdapter(entryArrayList)
-//        timeSheetRecyclerView.adapter = timeSheetAdapter
-////        "2RHE1GUMzqdaVilL6uqipnFwXRa2"
-//        val userId = auth.currentUser // Example user ID, replace with actual user ID logic
-//        eventChangeListner(userId)
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +37,15 @@ class TimeSheetListActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
-        if (currentUser != null) {
+        if (currentUser!= null) {
             val userId = currentUser.uid
             eventChangeListner(userId)
         } else {
             Log.e("User Error", "Current user is null")
         }
 
-
-
+        // Set the item click listener
+        timeSheetAdapter.setOnItemClickListener(this)
     }
 
     private fun eventChangeListner(userId: String) {
@@ -72,7 +55,7 @@ class TimeSheetListActivity : AppCompatActivity() {
             .collection("entries")
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-                    if (error != null) {
+                    if (error!= null) {
                         Log.e("Firestore Error", error.message.toString())
                         return
                     }
@@ -92,4 +75,9 @@ class TimeSheetListActivity : AppCompatActivity() {
         }
     }
 
+    override fun onItemClick(position: Int) {
+        val selectedEntry = entryArrayList[position]
+
+
+    }
 }
