@@ -21,8 +21,7 @@ To get started with Paradox Planner, follow these steps:
 ## Technologies Used
 
 - **Firebase**: Firebase Authentication and Firestore are used for user authentication and data storage.
-- **Android Jetpack**: The app is built using Android Jetpack components such as ViewModel, LiveData, RecyclerView, etc.
-- **Glide**: Glide is used for image loading and caching.
+- **Android Jetpack(Android studio)**: The app is built using Android Jetpack components such as ViewModel, LiveData, RecyclerView, etc.
 - **Material Components**: Material Design components are used for creating a modern and consistent UI.
 
 ## Contributions
@@ -39,8 +38,6 @@ We thank the following contributors for their valuable input to this project:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### Android Studio License Agreement
 
 Android Studio Terms of Service: These terms of service (“Terms”) cover your use and access to the services, client software, and websites (“Services”) provided by Google Inc. (“Google”) through which you access and use Android Studio (defined below). By accessing or using our Services, you agree to be bound by these Terms. If you do not agree to these Terms, including the mandatory arbitration provision and class action waiver in Section 15, you may not access or use the Services. Please read these Terms carefully, as they contain an agreement to arbitrate and other important information regarding your legal rights, remedies, and obligations.
 
