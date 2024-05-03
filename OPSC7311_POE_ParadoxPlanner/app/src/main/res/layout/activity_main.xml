@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="249dp"
@@ -25,8 +26,23 @@
         android:text="Category List"
         app:layout_constraintBottom_toTopOf="@+id/btnTimeSheetList"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    <Button
+        android:id="@+id/btnGoToCategoryActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/rectangle_button"
+        android:text="Category"
+        app:layout_constraintBottom_toTopOf="@+id/btnTimeSheetList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintVertical_bias="3.0" />
 
     <Button
         android:id="@+id/btnTimeSheetList"
@@ -37,6 +53,7 @@
         android:text="Time Sheet List"
         app:layout_constraintBottom_toTopOf="@+id/btnGoToTimesheetActivity"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCategoryList" />
 
@@ -49,6 +66,7 @@
         android:text="Go to Timesheet Activity"
         app:layout_constraintBottom_toTopOf="@+id/btnGoalTimer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTimeSheetList" />
 
@@ -61,6 +79,7 @@
         android:text="Goal Timer Screen"
         app:layout_constraintBottom_toTopOf="@+id/btnLogOut"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGoToTimesheetActivity" />
 

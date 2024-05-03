@@ -1,5 +1,7 @@
 package com.example.opsc7311_poe_paradoxplanner
 
+import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -30,6 +32,7 @@ class GoalTimer : AppCompatActivity() {
     private lateinit var timerContainer: LinearLayout
     private lateinit var max: EditText
     private lateinit var min: EditText
+    private  lateinit var back: Button
 
     private var isTimerRunning = false
     private var startTimeInMillis: Long = 0
@@ -38,31 +41,36 @@ class GoalTimer : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goal_timer)
 
-        chronometer = findViewById(R.id.chronometer)
-        btnStart = findViewById(R.id.btnStart)
-        btnStop = findViewById(R.id.btnStop)
+//        chronometer = findViewById(R.id.chronometer)
+//        btnStart = findViewById(R.id.btnStart)
+//        btnStop = findViewById(R.id.btnStop)
         spinnerProject = findViewById(R.id.spinnerProject)
-        spinnerTask = findViewById(R.id.spinnerTask)
-        timerContainer = findViewById(R.id.timerContainer)
+        back = findViewById(R.id.btnBack)
+
+//        timerContainer = findViewById(R.id.timerContainer)
         min= findViewById( R.id.etMinGoals)
         max= findViewById(R.id.etMaxGoals)
 
+
+        back.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         val auth = FirebaseAuth.getInstance()
         val uid = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance()
         // Sample data for projects and tasks
-      val projects = listOf("Project A")
-        val tasks = listOf("Task 1")
+      val projects = listOf(" ")
+
 
       //  Set up adapters for spinners
         val projectAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, projects)
         projectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerProject.adapter = projectAdapter
 
-        val taskAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tasks)
-        taskAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTask.adapter = taskAdapter
+
 
         // Fetch categories from Firestore and populate the spinner
         val userId = auth.currentUser?.uid
@@ -75,7 +83,8 @@ class GoalTimer : AppCompatActivity() {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     spinnerProject.adapter = adapter
                 }
-                .addOnFailureListener { Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                 }
         } else {
             Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
@@ -83,8 +92,14 @@ class GoalTimer : AppCompatActivity() {
 
         val currentDate= getCurrentDate()
         val seletedCategory= spinnerProject.selectedItem.toString()
-        val mingoals = min.text.toString().trim()
-        val maxgoals = max.text.toString().trim()
+        val mingoals = min.toString()
+        val maxgoals = max.toString()
+
+// Check if they're not empty before storing in Firestore
+        if (mingoals.isEmpty() || maxgoals.isEmpty()) {
+            Toast.makeText(this, "Please enter both minimum and maximum goals.", Toast.LENGTH_SHORT).show()
+            return
+        }
         val gData= GoalData(
             currentDate,
             uid,
@@ -102,72 +117,8 @@ class GoalTimer : AppCompatActivity() {
                 Toast.makeText(this, "Added Goals", Toast.LENGTH_SHORT).show()
             }
 
-        // Event listener for when a project and task are selected
-        spinnerProject.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                showTimerComponentsIfReady()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // No action needed
-            }
-        }
-
-        spinnerTask.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                showTimerComponentsIfReady()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // No action needed
-            }
-        }
-
-        btnStart.setOnClickListener {
-            if (!isTimerRunning) {
-                startTimer()
-            }
-        }
-
-        btnStop.setOnClickListener {
-            if (isTimerRunning) {
-                stopTimer()
-            }
-        }
     }
 
-    private fun showTimerComponentsIfReady() {
-        val selectedProject = spinnerProject.selectedItem?.toString()
-        val selectedTask = spinnerTask.selectedItem?.toString()
-
-        if (selectedProject != null && selectedTask != null) {
-            timerContainer.visibility = View.VISIBLE
-        }
-    }
-
-    private fun startTimer() {
-        startTimeInMillis = SystemClock.elapsedRealtime()
-        chronometer.base = startTimeInMillis
-        chronometer.start() // Start the timer
-        isTimerRunning = true
-    }
-
-    private fun stopTimer() {
-        val endTimeInMillis = SystemClock.elapsedRealtime()
-        val elapsedMillis = endTimeInMillis - chronometer.base
-
-        // Stop the timer
-        chronometer.stop()
-        isTimerRunning = false
-
-        val elapsedSeconds = elapsedMillis / 1000
-        val elapsedMinutes = elapsedSeconds / 60
-        val elapsedHours = elapsedMinutes / 60
-
-        // Display elapsed time to the user
-        val formattedTime = String.format("%02d:%02d:%02d", elapsedHours, elapsedMinutes % 60, elapsedSeconds % 60)
-        Toast.makeText(this, "Elapsed time: $formattedTime", Toast.LENGTH_LONG).show()
-    }
     fun getCurrentDate(): String {
         val currentDate = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")

@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif-black"
-        android:text="GOAL TIMER"
+        android:text="@string/goal_timer"
         android:textColor="#C5B9B9"
         android:textSize="25sp"
         android:textStyle="bold" />
@@ -27,13 +27,7 @@
         android:minHeight="48dp"
         android:prompt="@string/select_project" />
 
-    <!-- Task Spinner -->
-    <Spinner
-        android:id="@+id/spinnerTask"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:prompt="@string/select_task" />
+
 
     <!-- Components for user to enter max and min goals -->
     <LinearLayout
@@ -78,39 +72,16 @@
             tools:ignore="VisualLintTextFieldSize" />
     </LinearLayout>
 
-    <!-- Timer Components (Initially hidden) -->
-    <LinearLayout
-        android:id="@+id/timerContainer"
+
+    <Button
+        android:id="@+id/btnBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:text="@string/back"/>
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnSave" />-->
 
-        <!-- Chronometer to display the timer -->
-        <Chronometer
-            android:id="@+id/chronometer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textSize="24sp" />
-
-        <!-- Start Button -->
-        <Button
-            android:id="@+id/btnStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:text="@string/start" />
-
-        <!-- Stop Button -->
-        <Button
-            android:id="@+id/btnStop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:text="@string/stop" />
-    </LinearLayout>
-
+<!--    -->
 </LinearLayout>
