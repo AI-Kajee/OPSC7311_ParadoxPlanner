@@ -87,7 +87,10 @@ class TimesheetActivity : AppCompatActivity() {
             val url = photoUrlEditText.text.toString()
             if (url.isNotEmpty()) {
                 // Use Glide to load the image from the URL with placeholders and error handling
-                Glide.with(this).load(url).into(pictureImageView)
+                Glide.with(this)
+                    .load(url)
+                    .apply(RequestOptions().centerCrop()) // Use centerCrop to scale the image while maintaining its aspect ratio
+                    .into(pictureImageView)
                 Toast.makeText(this, "Picture updated.", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Please enter a valid URL.", Toast.LENGTH_SHORT).show()
