@@ -28,10 +28,10 @@ To get started with Paradox Planner, follow these steps:
 
 We thank the following contributors for their valuable input to this project:
 
-- [Hiren Rahul Thulasaie](https://github.com/Hirenr12)
-- [Ethan Swanepoel](https://github.com/Ethan-Swanepoel)
-- [Ameer Inder Kajee](https://github.com/AI-Kajee)
-- [Nehal Singh](https://github.com/st10184628)
+- [Hiren Rahul Thulasaie ST10053063](https://github.com/Hirenr12)
+- [Ethan Swanepoel ST10198049](https://github.com/Ethan-Swanepoel)
+- [Ameer Inder Kajee ST10063110](https://github.com/AI-Kajee)
+- [Nehal Singh ST10184628](https://github.com/st10184628)
 
 
 
