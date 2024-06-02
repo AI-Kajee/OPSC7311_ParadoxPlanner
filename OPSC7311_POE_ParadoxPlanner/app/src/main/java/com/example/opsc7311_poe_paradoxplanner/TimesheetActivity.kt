@@ -3,8 +3,11 @@ package com.example.opsc7311_poe_paradoxplanner
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -15,7 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
 import java.util.Calendar
 
 class TimesheetActivity : AppCompatActivity() {
@@ -91,6 +94,8 @@ class TimesheetActivity : AppCompatActivity() {
 
         // Handling button click for saving timesheet entry
         saveButton.setOnClickListener {
+            Log.d(TimesheetActivity.TAG, "Save button clicked")
+
             val timesheetName = timesheetNameEditText.text.toString()
             val startTime = startTimeEditText.text.toString()
             val endTime = endTimeEditText.text.toString()
@@ -99,42 +104,62 @@ class TimesheetActivity : AppCompatActivity() {
             val category = categorySpinner.selectedItem.toString()
             val description = descriptionEditText.text.toString()
 
-            if (selectedImageUri!= null) { // Check if an image was selected
-                val imageRef = FirebaseStorage.getInstance().getReference("images/${auth.currentUser?.uid}/${System.currentTimeMillis()}.jpg")
-                imageRef.putFile(selectedImageUri!!)
-                    .addOnSuccessListener {
-                        // Get download URL after upload
-                        imageRef.downloadUrl.addOnSuccessListener { uri ->
-                            val timesheetEntry = hashMapOf(
-                                "timesheetName" to timesheetName,
-                                "startTime" to startTime,
-                                "endTime" to endTime,
-                                "startDate" to startDate,
-                                "endDate" to endDate,
-                                "category" to category,
-                                "description" to description,
-                                "imageUrl" to uri.toString()
-                            )
+            if (timesheetName.isNotEmpty()) {
+                val user = auth.currentUser
+                if (user!= null) {
+                    val timesheetData = mutableMapOf<String, Any>(
+                        "userId" to user.uid,
+                        "timesheetName" to timesheetName,
+                        "startTime" to startTime,
+                        "endTime" to endTime,
+                        "startDate" to startDate,
+                        "endDate" to endDate,
+                        "category" to category,
+                        "description" to description
+                    )
 
-                            // Save the timesheet entry to Firestore
-                            auth.currentUser?.let { user ->
-                                db.collection("timesheets").document(user.uid).collection("entries")
-                                    .add(timesheetEntry)
-                                    .addOnSuccessListener { documentReference ->
-                                        Log.d(TAG, "Timesheet entry saved with ID: ${documentReference.id}")
-                                        Toast.makeText(this, "Timesheet entry has been successfully created.", Toast.LENGTH_LONG).show()
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        Log.d(TAG, "Error saving timesheet entry: ", exception)
-                                        Toast.makeText(this, "Failed to create timesheet entry.", Toast.LENGTH_SHORT).show()
-                                    }
+                    if (selectedImageUri!= null) {
+                        // Convert image to Base64
+                        val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImageUri!!)
+                        val byteArrayOutputStream = ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 70, byteArrayOutputStream)
+                        val bytes = byteArrayOutputStream.toByteArray()
+                        val base64Image = Base64.encodeToString(bytes, Base64.DEFAULT)
+
+                        // Store the Base64 string in timesheetData
+                        timesheetData["image"] = base64Image
+
+                        // Add timesheet data to Firestore
+                        db.collection("timesheet").add(timesheetData)
+                            .addOnSuccessListener { documentReference ->
+                                Toast.makeText(this, "Timesheet entry added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
+                                // After successful addition, update the category total hours
+                                updateCategoryTotalHours(category, calculateTotalHours())
                             }
-                        }
+                            .addOnFailureListener { e ->
+                                Log.w(TimesheetActivity.TAG, "Error adding timesheet entry", e)
+                            }
+                    } else {
+                        // No image selected, just add the timesheet data to Firestore
+                        db.collection("timesheet").add(timesheetData)
+                            .addOnSuccessListener { documentReference ->
+                                Toast.makeText(this, "Timesheet entry added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
+                                // After successful addition, update the category total hours
+                                updateCategoryTotalHours(category, calculateTotalHours())
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TimesheetActivity.TAG, "Error adding timesheet entry", e)
+                            }
                     }
+                } else {
+                    Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(this, "Please select an image.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please enter a timesheet entry name.", Toast.LENGTH_SHORT).show()
             }
         }
+
+
 
         btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -187,4 +212,81 @@ class TimesheetActivity : AppCompatActivity() {
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show()
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+    private fun calculateTotalHours(): Double {
+        val startTimeText = startTimeEditText.text.toString()
+        val endTimeText = endTimeEditText.text.toString()
+
+        // Parse start and end times
+        val startTimeParts = startTimeText.split(":")
+        val endTimeParts = endTimeText.split(":")
+
+        val startHour = startTimeParts[0].toInt()
+        val startMinute = startTimeParts[1].toInt()
+        val endHour = endTimeParts[0].toInt()
+        val endMinute = endTimeParts[1].toInt()
+
+        // Create Calendar instances for start and end times
+        val startCalendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, startHour)
+            set(Calendar.MINUTE, startMinute)
+        }
+
+        val endCalendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, endHour)
+            set(Calendar.MINUTE, endMinute)
+        }
+
+        // Calculate the difference in milliseconds
+        val diffInMillis = endCalendar.timeInMillis - startCalendar.timeInMillis
+
+        // Convert milliseconds to hours, ensuring the division results in a Double
+        val totalHours = diffInMillis.toDouble() / (1000 * 60 * 60)
+
+        return totalHours
+    }
+
+
+
+    private fun updateCategoryTotalHours(categoryName: String, totalHours: Double) {
+        val userId = auth.currentUser?.uid
+        if (userId!= null) {
+            db.collection("categories").whereEqualTo("userId", userId).whereEqualTo("categoryName", categoryName)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        val document = querySnapshot.documents.first()
+                        val currentTotalHours = document.getDouble("totalHours")?: 0.0
+                        val updatedTotalHours = currentTotalHours + totalHours
+
+                        document.reference.update("totalHours", updatedTotalHours)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Category total hours updated successfully.", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(TAG, "Error updating category total hours", e)
+                            }
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TAG, "Error fetching category document", exception)
+                }
+        } else {
+            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+
+
 }
