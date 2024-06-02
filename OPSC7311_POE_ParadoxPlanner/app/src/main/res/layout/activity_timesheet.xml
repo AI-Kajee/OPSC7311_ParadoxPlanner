@@ -50,19 +50,12 @@
         android:layout_height="wrap_content"
         android:hint="Description" />
 
-    <EditText
-        android:id="@+id/photoUrlEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Photo URL" />
-
     <ImageView
-        android:id="@+id/picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/pictureImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:padding="8dp"
         android:src="@drawable/ic_launcher_background" />
-
 
     <Button
         android:id="@+id/btnUploadPicture"

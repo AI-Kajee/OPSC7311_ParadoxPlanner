@@ -3,19 +3,19 @@ package com.example.opsc7311_poe_paradoxplanner
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Spinner
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import java.util.Calendar
 
 class TimesheetActivity : AppCompatActivity() {
@@ -29,7 +29,6 @@ class TimesheetActivity : AppCompatActivity() {
     private lateinit var endDateEditText: EditText
     private lateinit var categorySpinner: Spinner
     private lateinit var descriptionEditText: EditText
-    private lateinit var photoUrlEditText: EditText
     private lateinit var uploadPictureButton: Button
     private lateinit var saveButton: Button
     private lateinit var pictureImageView: ImageView
@@ -37,7 +36,10 @@ class TimesheetActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "TimesheetActivity"
+        private const val PICK_IMAGE_REQUEST = 100
     }
+
+    private var selectedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +57,7 @@ class TimesheetActivity : AppCompatActivity() {
         endDateEditText = findViewById(R.id.endDateEditText)
         categorySpinner = findViewById(R.id.categorySpinner)
         descriptionEditText = findViewById(R.id.descriptionEditText)
-        photoUrlEditText = findViewById(R.id.photoUrlEditText)
-        pictureImageView = findViewById(R.id.picture)
+        pictureImageView = findViewById(R.id.pictureImageView)
         btnBack = findViewById(R.id.btnBack)
 
         // Initialize date and time picker listeners
@@ -81,20 +82,11 @@ class TimesheetActivity : AppCompatActivity() {
             Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
         }
 
-
         // Handling button click for uploading profile picture
         uploadPictureButton.setOnClickListener {
-            val url = photoUrlEditText.text.toString()
-            if (url.isNotEmpty()) {
-                // Use Glide to load the image from the URL with placeholders and error handling
-                Glide.with(this)
-                    .load(url)
-                    .apply(RequestOptions().centerCrop()) // Use centerCrop to scale the image while maintaining its aspect ratio
-                    .into(pictureImageView)
-                Toast.makeText(this, "Picture updated.", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Please enter a valid URL.", Toast.LENGTH_SHORT).show()
-            }
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
         // Handling button click for saving timesheet entry
@@ -106,35 +98,41 @@ class TimesheetActivity : AppCompatActivity() {
             val endDate = endDateEditText.text.toString()
             val category = categorySpinner.selectedItem.toString()
             val description = descriptionEditText.text.toString()
-            val photoUrl = photoUrlEditText.text.toString()
 
-            if (timesheetName.isNotEmpty() && startTime.isNotEmpty() && endTime.isNotEmpty() && startDate.isNotEmpty() && endDate.isNotEmpty() && category.isNotEmpty() && description.isNotEmpty()) {
-                // Create a map with the timesheet entry data
-                val timesheetEntry = hashMapOf(
-                    "timesheetName" to timesheetName,
-                    "startTime" to startTime,
-                    "endTime" to endTime,
-                    "startDate" to startDate,
-                    "endDate" to endDate,
-                    "category" to category,
-                    "description" to description,
-                    "photoUrl" to photoUrl
-                )
+            if (selectedImageUri!= null) { // Check if an image was selected
+                val imageRef = FirebaseStorage.getInstance().getReference("images/${auth.currentUser?.uid}/${System.currentTimeMillis()}.jpg")
+                imageRef.putFile(selectedImageUri!!)
+                    .addOnSuccessListener {
+                        // Get download URL after upload
+                        imageRef.downloadUrl.addOnSuccessListener { uri ->
+                            val timesheetEntry = hashMapOf(
+                                "timesheetName" to timesheetName,
+                                "startTime" to startTime,
+                                "endTime" to endTime,
+                                "startDate" to startDate,
+                                "endDate" to endDate,
+                                "category" to category,
+                                "description" to description,
+                                "imageUrl" to uri.toString()
+                            )
 
-                // Save the timesheet entry to Firestore
-                auth.currentUser?.let { user ->
-                    db.collection("timesheets").document(user.uid).collection("entries").add(timesheetEntry)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d(TAG, "Timesheet entry saved with ID: ${documentReference.id}")
-                            Toast.makeText(this, "Timesheet entry has been successfully created.", Toast.LENGTH_LONG).show()
+                            // Save the timesheet entry to Firestore
+                            auth.currentUser?.let { user ->
+                                db.collection("timesheets").document(user.uid).collection("entries")
+                                    .add(timesheetEntry)
+                                    .addOnSuccessListener { documentReference ->
+                                        Log.d(TAG, "Timesheet entry saved with ID: ${documentReference.id}")
+                                        Toast.makeText(this, "Timesheet entry has been successfully created.", Toast.LENGTH_LONG).show()
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Log.d(TAG, "Error saving timesheet entry: ", exception)
+                                        Toast.makeText(this, "Failed to create timesheet entry.", Toast.LENGTH_SHORT).show()
+                                    }
+                            }
                         }
-                        .addOnFailureListener { exception ->
-                            Log.d(TAG, "Error saving timesheet entry: ", exception)
-                            Toast.makeText(this, "Failed to create timesheet entry.", Toast.LENGTH_LONG).show()
-                        }
-                }
+                    }
             } else {
-                Toast.makeText(this, "All fields must be filled.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please select an image.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -142,6 +140,14 @@ class TimesheetActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null && data.data!= null) {
+            selectedImageUri = data.data // Store the URI of the selected image
+            pictureImageView.setImageURI(selectedImageUri) // Display the selected image
         }
     }
 

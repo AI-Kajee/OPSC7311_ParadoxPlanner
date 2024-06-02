@@ -68,7 +68,6 @@
         android:drawableLeft="@android:drawable/ic_menu_upload"
         android:text="Create Category"
         app:iconPadding="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCategoryName" />
@@ -98,17 +97,5 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.964"
         app:srcCompat="@drawable/logo" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="229dp"
-        android:layout_height="194dp"
-        android:background="@drawable/categorycool"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btnBack" />
-
-    <!--app:srcCompat="@drawable/categorycool"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
