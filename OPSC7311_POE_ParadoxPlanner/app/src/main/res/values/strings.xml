@@ -19,10 +19,10 @@
     <string name="stopss" />
     <string name="stops">string</string>
     <string name="starts">string</string>
-    <string name="max_goals">Max Goals</string>
-    <string name="enter_max_goals">Enter max goals</string>
-    <string name="min_goals">Min Goals</string>
-    <string name="enter_min_goals">Enter min goals</string>
+    <string name="max_goals">Max Goal</string>
+    <string name="enter_max_goals">Enter max goal [hrs]</string>
+    <string name="min_goals">Min Goal</string>
+    <string name="enter_min_goals">Enter min goal [hrs]</string>
     <string name="stop">Stop</string>
     <string name="start">Start</string>
     <string name="goal_timer">GOAL TIMER</string>

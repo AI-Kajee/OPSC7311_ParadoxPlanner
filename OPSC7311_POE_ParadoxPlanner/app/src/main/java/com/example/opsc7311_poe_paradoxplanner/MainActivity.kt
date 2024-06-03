@@ -36,7 +36,7 @@ val btnGoalTimer = findViewById<Button>(R.id.btnGoalTimer)
             startActivity(intent)
         }
         btnGoalTimer.setOnClickListener {
-            val intent = Intent(this, GoalTimer::class.java)
+            val intent = Intent(this, GoalActivity::class.java)
             startActivity(intent)
         }
         btnLogOut.setOnClickListener {

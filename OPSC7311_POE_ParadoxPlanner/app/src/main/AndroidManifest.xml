@@ -21,7 +21,7 @@
             android:name=".TimesheetEntry"
             android:exported="false" />
         <activity
-            android:name=".GoalTimer"
+            android:name=".GoalActivity"
             android:exported="false" />
         <activity
             android:name=".TimeSheetListActivity"
