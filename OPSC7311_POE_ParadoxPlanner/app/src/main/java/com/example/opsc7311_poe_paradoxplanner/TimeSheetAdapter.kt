@@ -3,9 +3,9 @@ package com.example.opsc7311_poe_paradoxplanner
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.opsc7311_poe_paradoxplanner.TimesheetEntry
 
 class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
     RecyclerView.Adapter<TimeSheetAdapter.MyViewHolder>() {
@@ -36,6 +36,14 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         holder.itemView.setOnClickListener {
             listener?.onItemClick(position)
         }
+
+        holder.btnImage.setOnClickListener {
+
+        }
+        holder.btnTimer.setOnClickListener {
+
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -47,5 +55,8 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         val category: TextView = itemView.findViewById(R.id.tvCategory)
         val startDate: TextView = itemView.findViewById(R.id.tvStartDate)
         val endDate: TextView = itemView.findViewById(R.id.tvEndDate)
+        val timerText: TextView = itemView.findViewById(R.id.tvTimer)
+        val btnImage: Button = itemView.findViewById(R.id.btnImage)
+        val btnTimer: Button = itemView.findViewById(R.id.btnTimer)
     }
 }

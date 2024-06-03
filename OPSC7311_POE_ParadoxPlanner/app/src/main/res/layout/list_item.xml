@@ -26,7 +26,7 @@
             android:id="@+id/tvTimeSheetName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hirenethan"
+            android:text="name"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_marginStart="8dp"/>
@@ -44,7 +44,7 @@
             android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/human"
+            android:text="category"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_marginStart="8dp"/>
@@ -62,7 +62,7 @@
             android:id="@+id/tvStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/_12_01_2024"
+            android:text="00/00/0000"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_marginStart="8dp"/>
@@ -80,11 +80,41 @@
             android:id="@+id/tvEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/_25_04_2024"
+            android:text="00/00/0000"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnImage"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="▣"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btnTimer"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="▶"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="00:00:00"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
 
     </LinearLayout>
 

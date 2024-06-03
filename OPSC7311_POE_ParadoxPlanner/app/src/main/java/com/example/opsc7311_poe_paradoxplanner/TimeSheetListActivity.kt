@@ -50,9 +50,8 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
 
     private fun eventChangeListner(userId: String) {
         db = FirebaseFirestore.getInstance()
-        db.collection("timesheets")
-            .document(userId)  // Replace "userId" with the actual user ID
-            .collection("entries")
+        db.collection("timesheet")
+            .whereEqualTo("userId", userId)
             .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                     if (error!= null) {
