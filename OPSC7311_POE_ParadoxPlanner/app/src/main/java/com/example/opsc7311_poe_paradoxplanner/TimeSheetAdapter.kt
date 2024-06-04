@@ -55,7 +55,6 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         val category: TextView = itemView.findViewById(R.id.tvCategory)
         val startDate: TextView = itemView.findViewById(R.id.tvStartDate)
         val endDate: TextView = itemView.findViewById(R.id.tvEndDate)
-        val timerText: TextView = itemView.findViewById(R.id.tvTimer)
         val btnImage: Button = itemView.findViewById(R.id.btnImage)
         val btnTimer: Button = itemView.findViewById(R.id.btnTimer)
     }

@@ -19,6 +19,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.ByteArrayOutputStream
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Calendar
 
 class TimesheetActivity : AppCompatActivity() {
@@ -103,6 +106,7 @@ class TimesheetActivity : AppCompatActivity() {
             val endDate = endDateEditText.text.toString()
             val category = categorySpinner.selectedItem.toString()
             val description = descriptionEditText.text.toString()
+            val totalHours = calculateTotalHours(startTime,endTime,startDate,endDate).toString()
 
             if (timesheetName.isNotEmpty()) {
                 val user = auth.currentUser
@@ -115,7 +119,8 @@ class TimesheetActivity : AppCompatActivity() {
                         "startDate" to startDate,
                         "endDate" to endDate,
                         "category" to category,
-                        "description" to description
+                        "description" to description,
+                        "totalHours" to totalHours
                     )
 
                     if (selectedImageUri!= null) {
@@ -134,7 +139,7 @@ class TimesheetActivity : AppCompatActivity() {
                             .addOnSuccessListener { documentReference ->
                                 Toast.makeText(this, "Timesheet entry added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
                                 // After successful addition, update the category total hours
-                                updateCategoryTotalHours(category, calculateTotalHours())
+                                updateCategoryTotalHours(category, totalHours.toDouble())
                             }
                             .addOnFailureListener { e ->
                                 Log.w(TimesheetActivity.TAG, "Error adding timesheet entry", e)
@@ -145,7 +150,7 @@ class TimesheetActivity : AppCompatActivity() {
                             .addOnSuccessListener { documentReference ->
                                 Toast.makeText(this, "Timesheet entry added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
                                 // After successful addition, update the category total hours
-                                updateCategoryTotalHours(category, calculateTotalHours())
+                                updateCategoryTotalHours(category, totalHours.toDouble())
                             }
                             .addOnFailureListener { e ->
                                 Log.w(TimesheetActivity.TAG, "Error adding timesheet entry", e)
@@ -200,7 +205,8 @@ class TimesheetActivity : AppCompatActivity() {
             TimePickerDialog(this, { _, hourOfDay, minute ->
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
                 calendar.set(Calendar.MINUTE, minute)
-                startTimeEditText.setText("${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}")
+                // Ensure the time is displayed in 24-hour format
+                startTimeEditText.setText(String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)))
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show()
         }
         endTimeEditText.setOnClickListener {
@@ -208,7 +214,8 @@ class TimesheetActivity : AppCompatActivity() {
             TimePickerDialog(this, { _, hourOfDay, minute ->
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
                 calendar.set(Calendar.MINUTE, minute)
-                endTimeEditText.setText("${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}")
+                // Ensure the time is displayed in 24-hour format
+                endTimeEditText.setText(String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)))
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show()
         }
     }
@@ -223,38 +230,24 @@ class TimesheetActivity : AppCompatActivity() {
 
 
 
-    private fun calculateTotalHours(): Double {
-        val startTimeText = startTimeEditText.text.toString()
-        val endTimeText = endTimeEditText.text.toString()
 
-        // Parse start and end times
-        val startTimeParts = startTimeText.split(":")
-        val endTimeParts = endTimeText.split(":")
+    fun calculateTotalHours(startTime: String, endTime: String, startDate: String, endDate: String): Double {
+        // Define the formatter to parse the input strings
+        val formatter = DateTimeFormatter.ofPattern("yyyy/M/d H:mm")
 
-        val startHour = startTimeParts[0].toInt()
-        val startMinute = startTimeParts[1].toInt()
-        val endHour = endTimeParts[0].toInt()
-        val endMinute = endTimeParts[1].toInt()
+        // Parse the start and end times
+        val startTime = LocalDateTime.parse("$startDate $startTime", formatter)
+        val endTime = LocalDateTime.parse("$endDate $endTime", formatter)
 
-        // Create Calendar instances for start and end times
-        val startCalendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, startHour)
-            set(Calendar.MINUTE, startMinute)
-        }
+        // Calculate the duration between the two times
+        val duration = ChronoUnit.HOURS.between(startTime, endTime)
 
-        val endCalendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, endHour)
-            set(Calendar.MINUTE, endMinute)
-        }
-
-        // Calculate the difference in milliseconds
-        val diffInMillis = endCalendar.timeInMillis - startCalendar.timeInMillis
-
-        // Convert milliseconds to hours, ensuring the division results in a Double
-        val totalHours = diffInMillis.toDouble() / (1000 * 60 * 60)
-
-        return totalHours
+        return duration.toDouble()
     }
+
+
+
+
 
 
 
