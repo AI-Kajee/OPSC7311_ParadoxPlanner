@@ -1,5 +1,6 @@
 package com.example.opsc7311_poe_paradoxplanner
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,17 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         }
 
         holder.btnImage.setOnClickListener {
-
+            // Assuming each TimesheetEntry has an imageUri field
+            val imageUrl = entry.photoUrl
+            // Check if the imageUri is not null
+            if (imageUrl!= null) {
+                // Create an Intent to start the ViewClickedImage activity
+                val intent = Intent(holder.itemView.context, ViewClickedImageActivity::class.java)
+                // Pass the imageUri to the ViewClickedImage activity
+                intent.putExtra("photoUrl", imageUrl)
+                // Start the activity
+                holder.itemView.context.startActivity(intent)
+            }
         }
         holder.btnTimer.setOnClickListener {
 

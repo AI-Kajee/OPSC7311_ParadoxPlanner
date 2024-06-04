@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OPSC7311_POE_ParadoxPlanner"
         tools:targetApi="31">
+        <activity
+            android:name=".TimerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewClickedImageActivity"
+            android:exported="false" />
         <activity
             android:name=".TimesheetEntry"
             android:exported="false" />

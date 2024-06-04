@@ -39,6 +39,8 @@ android {
 
 dependencies {
 
+    implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("io.coil-kt:coil:2.x.y") // Use the latest version available
     implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
