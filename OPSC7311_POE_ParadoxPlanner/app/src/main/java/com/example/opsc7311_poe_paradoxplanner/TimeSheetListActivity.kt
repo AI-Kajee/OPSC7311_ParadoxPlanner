@@ -58,9 +58,11 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
                         Log.e("Firestore Error", error.message.toString())
                         return
                     }
+                    entryArrayList.clear() // Clear the existing list to avoid duplicates
                     for (dc: DocumentChange in value?.documentChanges!!) {
-                        if (dc.type == DocumentChange.Type.ADDED) {
-                            entryArrayList.add(dc.document.toObject(TimesheetEntry::class.java))
+                        if (dc.type == DocumentChange.Type.ADDED || dc.type == DocumentChange.Type.MODIFIED) {
+                            val entry = dc.document.toObject(TimesheetEntry::class.java)
+                            entryArrayList.add(entry)
                         }
                     }
                     timeSheetAdapter.notifyDataSetChanged()

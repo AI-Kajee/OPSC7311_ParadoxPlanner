@@ -1,10 +1,12 @@
 package com.example.opsc7311_poe_paradoxplanner
 
-import android.content.Intent
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -27,35 +29,54 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
         val entry = entryList[position]
         holder.timeSheetName.text = entry.timesheetName
         holder.category.text = entry.category
         holder.startDate.text = entry.startDate
         holder.endDate.text = entry.endDate
+        holder.totHours.text=entry.totalHours
+
+        // Correctly decode the base64 string to a Bitmap and set it as the ImageView's drawable
+        val base64Image = entry.image
+        val decodedBytes = Base64.decode(base64Image, Base64.DEFAULT)
+        val decodedImage = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        holder.picImageView.setImageBitmap(decodedImage)
 
         // Set the click listener for each item
         holder.itemView.setOnClickListener {
             listener?.onItemClick(position)
         }
 
-        holder.btnImage.setOnClickListener {
-            // Assuming each TimesheetEntry has an imageUri field
-            val imageUrl = entry.photoUrl
-            // Check if the imageUri is not null
-            if (imageUrl!= null) {
-                // Create an Intent to start the ViewClickedImage activity
-                val intent = Intent(holder.itemView.context, ViewClickedImageActivity::class.java)
-                // Pass the imageUri to the ViewClickedImage activity
-                intent.putExtra("photoUrl", imageUrl)
-                // Start the activity
-                holder.itemView.context.startActivity(intent)
-            }
+        var isEnlarged = false // Flag to track if the image is enlarged
+
+        holder.picImageView.setOnClickListener {
+            isEnlarged =!isEnlarged // Toggle the flag
+
+            //Calculate dimensions in dp
+            val context = holder.picImageView.context
+            val widthDp = if (isEnlarged) 200 else 50
+            val heightDp = if (isEnlarged) 200 else 50
+
+            // Convert dp to pixels
+            val density = context.resources.displayMetrics.density
+            val widthPx = (widthDp * density).toInt()
+            val heightPx = (heightDp * density).toInt()
+
+            // Update LayoutParams
+            val layoutParams = holder.picImageView.layoutParams
+            layoutParams.width = widthPx
+            layoutParams.height = heightPx
+            holder.picImageView.layoutParams = layoutParams
         }
+
+
         holder.btnTimer.setOnClickListener {
 
         }
 
     }
+
 
     override fun getItemCount(): Int {
         return entryList.size
@@ -66,7 +87,8 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         val category: TextView = itemView.findViewById(R.id.tvCategory)
         val startDate: TextView = itemView.findViewById(R.id.tvStartDate)
         val endDate: TextView = itemView.findViewById(R.id.tvEndDate)
-        val btnImage: Button = itemView.findViewById(R.id.btnImage)
+        val picImageView: ImageView = itemView.findViewById(R.id.pictureImageView)
         val btnTimer: Button = itemView.findViewById(R.id.btnTimer)
+        val totHours:TextView=itemView.findViewById(R.id.tvTotHrs)
     }
 }

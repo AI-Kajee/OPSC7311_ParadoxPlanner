@@ -5,9 +5,9 @@ data class TimesheetEntry(
     val description: String ?= null,
     val endDate: String ?= null,
     val endTime : String ?= null,
-    val photoUrl: String ?= null,
+    val image: String ?= null,
     val startDate: String ?= null,
     val startTime : String ?= null,
     val timesheetName: String ?= null,
-    val totalHours: String ?=null
+    val totalHours: String
 )

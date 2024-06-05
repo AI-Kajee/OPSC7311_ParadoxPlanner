@@ -1,6 +1,5 @@
 package com.example.opsc7311_poe_paradoxplanner
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,11 +29,7 @@ class CategoryListAdapter(private val categoryList: ArrayList<CategoryDC>, var m
 
     override fun onBindViewHolder(holder: CategoryListAdapter.MyViewHolder, position: Int) {
         val category = categoryList[position]
-        if (category.totalHours <= maxHours) {
-            holder.category.text = "${category.categoryName} - Total Hours: ${category.totalHours}"
-        } else {
-            holder.category.text = ""
-        }
+        holder.category.text = "${category.categoryName} - Total Hours: ${category.totalHours}"
     }
 
     override fun getItemCount(): Int {

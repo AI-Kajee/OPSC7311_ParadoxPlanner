@@ -9,9 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 
 class CategoryListActivity : AppCompatActivity() {
     private lateinit var categoryListRecyclerView: RecyclerView
@@ -33,7 +31,7 @@ class CategoryListActivity : AppCompatActivity() {
 
         categoryDC = arrayListOf()
 
-        categoryListAdapter = CategoryListAdapter(categoryDC, 0.0) // Initialize with 0.0 max hours
+        categoryListAdapter = CategoryListAdapter(categoryDC, 100.0) // Initialize with 0.0 max hours
 
         categoryListRecyclerView.adapter = categoryListAdapter
 
@@ -72,22 +70,52 @@ class CategoryListActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser!= null) {
-            val query = db.collection("categories")
-                .whereEqualTo("userId", currentUser.uid) // Filter categories by the current user's ID
-                .whereEqualTo("totalHours", targetTotalHours) // Filter categories where totalHours equals the SeekBar's value
-            query.addSnapshotListener { value, error ->
-                if (error!= null) {
-                    // Handle error
-                    return@addSnapshotListener
-                }
 
-                value?.let { snapshot ->
-                    categoryDC.clear()
-                    for (document in snapshot.documents) {
-                        val category = document.toObject(CategoryDC::class.java)
-                        category?.let { categoryDC.add(it) }
+            if(targetTotalHours==100.0){
+                val query2 = db.collection("categories")
+                    .whereEqualTo("userId", currentUser.uid) // Filter categories by the current user's ID
+
+
+                query2.addSnapshotListener { value, error ->
+                    if (error!= null) {
+                        // Handle error
+                        return@addSnapshotListener
                     }
-                    categoryListAdapter.notifyDataSetChanged()
+
+                    value?.let { snapshot ->
+                        categoryDC.clear()
+                        for (document in snapshot.documents) {
+                            val category = document.toObject(CategoryDC::class.java)
+                            category?.let { categoryDC.add(it) }
+                        }
+                        categoryListAdapter.notifyDataSetChanged()
+                    }
+                }
+            }else if(targetTotalHours<100.0) {
+                val query = db.collection("categories")
+                    .whereEqualTo(
+                        "userId",
+                        currentUser.uid
+                    ) // Filter categories by the current user's ID
+                    .whereEqualTo(
+                        "totalHours",
+                        targetTotalHours
+                    ) // Filter categories where totalHours equals the SeekBar's value
+
+                query.addSnapshotListener { value, error ->
+                    if (error != null) {
+                        // Handle error
+                        return@addSnapshotListener
+                    }
+
+                    value?.let { snapshot ->
+                        categoryDC.clear()
+                        for (document in snapshot.documents) {
+                            val category = document.toObject(CategoryDC::class.java)
+                            category?.let { categoryDC.add(it) }
+                        }
+                        categoryListAdapter.notifyDataSetChanged()
+                    }
                 }
             }
         } else {
