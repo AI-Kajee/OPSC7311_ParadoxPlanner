@@ -19,10 +19,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.ByteArrayOutputStream
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class TimesheetActivity : AppCompatActivity() {
 
@@ -32,7 +32,6 @@ class TimesheetActivity : AppCompatActivity() {
     private lateinit var startTimeEditText: EditText
     private lateinit var endTimeEditText: EditText
     private lateinit var startDateEditText: EditText
-    private lateinit var endDateEditText: EditText
     private lateinit var categorySpinner: Spinner
     private lateinit var descriptionEditText: EditText
     private lateinit var uploadPictureButton: Button
@@ -60,7 +59,6 @@ class TimesheetActivity : AppCompatActivity() {
         startTimeEditText = findViewById(R.id.startTimeEditText)
         endTimeEditText = findViewById(R.id.endTimeEditText)
         startDateEditText = findViewById(R.id.startDateEditText)
-        endDateEditText = findViewById(R.id.endDateEditText)
         categorySpinner = findViewById(R.id.categorySpinner)
         descriptionEditText = findViewById(R.id.descriptionEditText)
         pictureImageView = findViewById(R.id.pictureImageView)
@@ -103,10 +101,9 @@ class TimesheetActivity : AppCompatActivity() {
             val startTime = startTimeEditText.text.toString()
             val endTime = endTimeEditText.text.toString()
             val startDate = startDateEditText.text.toString()
-            val endDate = endDateEditText.text.toString()
             val category = categorySpinner.selectedItem.toString()
             val description = descriptionEditText.text.toString()
-            val totalHours = calculateTotalHours(startTime,endTime,startDate,endDate).toString()
+            val duration = calculateDuration().toDouble()
 
             if (timesheetName.isNotEmpty()) {
                 val user = auth.currentUser
@@ -117,10 +114,9 @@ class TimesheetActivity : AppCompatActivity() {
                         "startTime" to startTime,
                         "endTime" to endTime,
                         "startDate" to startDate,
-                        "endDate" to endDate,
+                        "duration" to duration.toString(),
                         "category" to category,
-                        "description" to description,
-                        "totalHours" to totalHours
+                        "description" to description
                     )
 
                     if (selectedImageUri!= null) {
@@ -139,7 +135,7 @@ class TimesheetActivity : AppCompatActivity() {
                             .addOnSuccessListener { documentReference ->
                                 Toast.makeText(this, "Timesheet entry added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
                                 // After successful addition, update the category total hours
-                                updateCategoryTotalHours(category, totalHours.toDouble())
+                                updateCategoryTotalHours(category, duration.toDouble())
                             }
                             .addOnFailureListener { e ->
                                 Log.w(TimesheetActivity.TAG, "Error adding timesheet entry", e)
@@ -150,7 +146,7 @@ class TimesheetActivity : AppCompatActivity() {
                             .addOnSuccessListener { documentReference ->
                                 Toast.makeText(this, "Timesheet entry added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
                                 // After successful addition, update the category total hours
-                                updateCategoryTotalHours(category, totalHours.toDouble())
+                                updateCategoryTotalHours(category, duration.toDouble())
                             }
                             .addOnFailureListener { e ->
                                 Log.w(TimesheetActivity.TAG, "Error adding timesheet entry", e)
@@ -189,14 +185,6 @@ class TimesheetActivity : AppCompatActivity() {
                 startDateEditText.setText("${calendar.get(Calendar.YEAR)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.DAY_OF_MONTH)}")
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
         }
-
-        endDateEditText.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            DatePickerDialog(this, { _, year, monthOfYear, dayOfMonth ->
-                calendar.set(year, monthOfYear, dayOfMonth)
-                endDateEditText.setText("${calendar.get(Calendar.YEAR)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.DAY_OF_MONTH)}")
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
-        }
     }
 
     private fun initializeTimePickers() {
@@ -218,32 +206,44 @@ class TimesheetActivity : AppCompatActivity() {
                 endTimeEditText.setText(String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)))
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show()
         }
+
     }
 
 
 
 
 
+    private fun calculateDuration(): Long {
+        val startTimeText = startTimeEditText.text.toString()
+        val endTimeText = endTimeEditText.text.toString()
 
+        // Check if both start and end times are not empty
+        if (startTimeText.isNotBlank() && endTimeText.isNotBlank()) {
+            val startTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(startTimeText)
+            val endTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(endTimeText)
 
+            val diffInMillies = TimeUnit.MILLISECONDS.toMillis(endTime.time - startTime.time)
+            val hours = TimeUnit.MILLISECONDS.toHours(diffInMillies)
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillies) % 60
+            val totalDurationInSeconds = TimeUnit.MILLISECONDS.toSeconds(diffInMillies)
 
+            // Subtract 10 seconds from the total duration
+            val adjustedDurationInSeconds = totalDurationInSeconds - 10
 
+            // Convert back to hours and minutes if needed
+            val adjustedHours = TimeUnit.SECONDS.toHours(adjustedDurationInSeconds)
+            val adjustedMinutes = TimeUnit.SECONDS.toMinutes(adjustedDurationInSeconds) % 60
 
-
-
-    fun calculateTotalHours(startTime: String, endTime: String, startDate: String, endDate: String): Double {
-        // Define the formatter to parse the input strings
-        val formatter = DateTimeFormatter.ofPattern("yyyy/M/d H:mm")
-
-        // Parse the start and end times
-        val startTime = LocalDateTime.parse("$startDate $startTime", formatter)
-        val endTime = LocalDateTime.parse("$endDate $endTime", formatter)
-
-        // Calculate the duration between the two times
-        val duration = ChronoUnit.HOURS.between(startTime, endTime)
-
-        return duration.toDouble()
+            return TimeUnit.HOURS.toMinutes(adjustedHours) + adjustedMinutes
+        } else {
+            // Handle case where either start or end time is missing
+            Toast.makeText(this, "Please enter both start and end times.", Toast.LENGTH_SHORT).show()
+            return 0L
+        }
     }
+
+
+
 
 
 

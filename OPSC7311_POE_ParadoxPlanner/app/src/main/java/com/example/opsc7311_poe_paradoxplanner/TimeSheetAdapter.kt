@@ -34,8 +34,7 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         holder.timeSheetName.text = entry.timesheetName
         holder.category.text = entry.category
         holder.startDate.text = entry.startDate
-        holder.endDate.text = entry.endDate
-        holder.totHours.text=entry.totalHours
+        holder.duration.text=entry.duration
 
         // Correctly decode the base64 string to a Bitmap and set it as the ImageView's drawable
         val base64Image = entry.image
@@ -86,9 +85,8 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         val timeSheetName: TextView = itemView.findViewById(R.id.tvTimeSheetName)
         val category: TextView = itemView.findViewById(R.id.tvCategory)
         val startDate: TextView = itemView.findViewById(R.id.tvStartDate)
-        val endDate: TextView = itemView.findViewById(R.id.tvEndDate)
         val picImageView: ImageView = itemView.findViewById(R.id.pictureImageView)
         val btnTimer: Button = itemView.findViewById(R.id.btnTimer)
-        val totHours:TextView=itemView.findViewById(R.id.tvTotHrs)
+        val duration:TextView=itemView.findViewById(R.id.tvDuration)
     }
 }

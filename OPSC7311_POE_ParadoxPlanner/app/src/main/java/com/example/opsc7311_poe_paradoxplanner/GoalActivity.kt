@@ -43,6 +43,13 @@ class GoalActivity : AppCompatActivity() {
             val minGoal = minGoalET.text.toString().trim()
             val maxGoal = maxGoalET.text.toString().trim()
             val currentDate = getCurrentDate()
+            val userGoalProgress = 0
+
+            if(minGoal.toDouble()>24 || maxGoal.toDouble()>24){
+                Log.d(GoalActivity.TAG, "Please ensure that your minimum goal and maximum goal is equal to or under 24 hours.")
+                minGoalET.text.clear()
+                maxGoalET.text.clear()
+            }
 
             // Regular expression to match a valid number (integer or decimal)
             val numberPattern = "[+-]?[0-9]*\\.?[0-9]+([eE][+-]?[0-9]+)?".toRegex()
@@ -56,7 +63,8 @@ class GoalActivity : AppCompatActivity() {
                             "email" to user.email, // Include the user's email
                             "minGoal" to minGoal,
                             "maxGoal" to maxGoal,
-                            "date" to currentDate
+                            "date" to currentDate,
+                            "userGoalProgress" to userGoalProgress
                         )
 
                         db.collection("goals").add(goalData)

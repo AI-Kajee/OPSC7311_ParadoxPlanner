@@ -33,12 +33,6 @@
         android:layout_height="wrap_content"
         android:hint="Start Date" />
 
-    <EditText
-        android:id="@+id/endDateEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="End Date" />
-
     <Spinner
         android:id="@+id/categorySpinner"
         android:layout_width="match_parent"

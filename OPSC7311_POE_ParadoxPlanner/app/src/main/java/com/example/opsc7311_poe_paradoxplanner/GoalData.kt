@@ -6,5 +6,6 @@ data class GoalData(
     val firebaseUUID: String?,
     val maxgoals: String?,
     val mingoals: String?,
-    val categoryName: String?
+    val categoryName: String?,
+    val userGoalProgress: String?
 )
