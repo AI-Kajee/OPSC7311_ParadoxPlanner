@@ -294,8 +294,6 @@ class TimesheetActivity : AppCompatActivity() {
 
 
 
-
-
     private fun updateCategoryTotalHours(categoryName: String, totalHours: Double) {
         val userId = auth.currentUser?.uid
         if (userId!= null) {
