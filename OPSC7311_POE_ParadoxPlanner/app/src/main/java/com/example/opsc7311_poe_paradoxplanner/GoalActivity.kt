@@ -43,7 +43,7 @@ class GoalActivity : AppCompatActivity() {
             val minGoal = minGoalET.text.toString().trim()
             val maxGoal = maxGoalET.text.toString().trim()
             val currentDate = getCurrentDate()
-            val userGoalProgress = 0
+            val userGoalProgress = 0.0
 
             // Regular expression to match a valid number (integer or decimal)
             val numberPattern = "[+-]?[0-9]*\\.?[0-9]+([eE][+-]?[0-9]+)?".toRegex()
@@ -100,7 +100,7 @@ class GoalActivity : AppCompatActivity() {
 
     fun getCurrentDate(): String {
         val currentDate = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         return formatter.format(currentDate)
     }
 

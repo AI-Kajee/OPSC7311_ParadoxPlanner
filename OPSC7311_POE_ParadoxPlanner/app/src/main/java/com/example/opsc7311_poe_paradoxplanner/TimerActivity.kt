@@ -1,5 +1,6 @@
 package com.example.opsc7311_poe_paradoxplanner
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -11,6 +12,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.math.BigDecimal
+import java.math.MathContext
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class TimerActivity : AppCompatActivity() {
 
@@ -22,6 +27,10 @@ class TimerActivity : AppCompatActivity() {
 
     private var isTimerRunning = false // Tracks if the timer is running
     private var startTime: Long = 0 // Stores the start time
+
+
+
+
 
     companion object {
         private const val TAG = "TimerActivity"
@@ -46,8 +55,8 @@ class TimerActivity : AppCompatActivity() {
             db.collection("timesheet").whereEqualTo("userId", userId)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
-                    val timesheets = querySnapshot.documents.map { it.getString("timesheetName")!! }
-                    val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, timesheets)
+                    val timesheets = querySnapshot.documents.map { it.getString("timesheetName")?:""}
+                    val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, timesheets.toTypedArray())
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     timeSheetSpinner.adapter = adapter
                 }
@@ -61,43 +70,158 @@ class TimerActivity : AppCompatActivity() {
 
 
 
-        btnTimer.setOnClickListener { view ->
+
+        btnTimer.setOnClickListener {
             if (!isTimerRunning) {
-                // Store the first click time
+                // Start the timer
                 startTime = SystemClock.elapsedRealtime()
                 isTimerRunning = true
-
-                Toast.makeText(view.context, "First Timer Click", Toast.LENGTH_SHORT).show()
-
-                Log.d(TAG, "First Timer Click")
-
+                Toast.makeText(this, "Timer Started", Toast.LENGTH_SHORT).show()
             } else {
+                // Stop the timer and calculate elapsed time
                 val currentTime = SystemClock.elapsedRealtime()
-                val elapsedTimeMs = currentTime - startTime
+                val elapsedTimeMs = BigDecimal(currentTime - startTime)
+                val elapsedTimeSec = elapsedTimeMs.divide(BigDecimal(1000), MathContext.DECIMAL64)
+                val elapsedTimeMin = elapsedTimeSec.divide(BigDecimal(60), MathContext.DECIMAL64)
+                val elapsedTimeHours = elapsedTimeMin.divide(BigDecimal(60), MathContext.DECIMAL64)
+                val timesheetName = timeSheetSpinner.selectedItem.toString()
+               /* val elapsedTimeMs = currentTime - startTime
                 val elapsedTimeSec = elapsedTimeMs / 1000
                 val elapsedTimeMin = elapsedTimeSec / 60
-                val elapsedTimeHours = elapsedTimeMin / 60
-                val roundedElapsedTimeHours = String.format("%.2f", elapsedTimeHours)
-                val roundedElapsedTimeMin = String.format("%.2f", elapsedTimeMin % 60)
+                val elapsedTimeHours = elapsedTimeMin / 60*/
 
+                // Update the start time for next calculation
+                startTime = currentTime
 
-                Toast.makeText(view.context, "Elapsed Time: $elapsedTimeMs ms",Toast.LENGTH_SHORT).show()
+                Log.d(TimerActivity.TAG, "Elapsed time in hours: $elapsedTimeHours")
 
-                // Display the elapsed time or perform other actions with it
-                Log.d(TAG, "Elapsed Time: $elapsedTimeMs ms")
+                // Now call updateUserGoalProgress with the calculated elapsed time
+                updateUserGoalProgress(elapsedTimeHours.toDouble())
 
-                // Reset the timer state
-                isTimerRunning = false
-
-                startTime = 0
-
-                Toast.makeText(view.context, "Second Timer Click", Toast.LENGTH_SHORT).show()
-
-                Log.d(TAG, "Second Timer Click")
+                // Now call updateTimesheetDuration and use the selected timesheet name from the spinner
+                updateTimesheetDuration(timesheetName, elapsedTimeHours.toDouble())
             }
         }
 
+        btnBack.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
     }
+
+
+
+
+
+
+
+
+
+
+
+    private fun updateUserGoalProgress(elapsedTime: Double) {
+        val userId = auth.currentUser?.uid
+        val currentDate=getCurrentDate()
+
+        if (userId!= null) {
+            db.collection("goals").whereEqualTo("userId", userId).whereEqualTo("date", currentDate)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        val document = querySnapshot.documents.first()
+                        Log.d(TimerActivity.TAG, "Document ID: ${document.id}")
+                        val currentUserGoalProgressStr = document.getString("userGoalProgress")?: "0.0"
+                        val currentUserGoalProgress = currentUserGoalProgressStr.toDouble()
+                        Log.d(TimerActivity.TAG, "Current User Goal Progress: $currentUserGoalProgress")
+                        val updatedUserGoalProgress = currentUserGoalProgress + elapsedTime
+                        Log.d(TimerActivity.TAG, "Updated User Goal Progress: $updatedUserGoalProgress")
+
+                        document.reference.update("userGoalProgress", updatedUserGoalProgress.toString())
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "User Goal Progress updated successfully.", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(TimerActivity.TAG, "Error updating User Goal Progress", e)
+                            }
+                    } else {
+                        Log.w(TimerActivity.TAG, "No existing goal found for today.")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TimerActivity.TAG, "Error fetching goal document", exception)
+                }
+        } else {
+            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private fun updateTimesheetDuration(timesheetName:String,elapsedTime: Double) {
+        val userId = auth.currentUser?.uid
+
+        if (userId!= null) {
+            db.collection("timesheet").whereEqualTo("userId", userId).whereEqualTo("timesheetName", timesheetName)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        val document = querySnapshot.documents.first()
+                        Log.d(TimerActivity.TAG, "Document ID: ${document.id}")
+                        val selTaskDurationStr = document.getString("duration")?: "0.0"
+                        val selTaskDuration = selTaskDurationStr.toDouble()
+                        Log.d(TimerActivity.TAG, "Selected Task Duration: $selTaskDuration")
+                        val updatedSelTaskDuration = selTaskDuration - elapsedTime
+                        Log.d(TimerActivity.TAG, "Updated Selected Task Duration: $updatedSelTaskDuration")
+
+                        document.reference.update("duration", updatedSelTaskDuration.toString())
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Selected Task Duration updated successfully.", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(TimerActivity.TAG, "Error updating Selected Task Duration", e)
+                            }
+                    } else {
+                        Log.w(TimerActivity.TAG, "No task found.")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TimerActivity.TAG, "Error fetching timesheet document", exception)
+                }
+        } else {
+            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    fun getCurrentDate(): String {
+        val currentDate = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        return formatter.format(currentDate)
+    }
+
+
+
 
 }

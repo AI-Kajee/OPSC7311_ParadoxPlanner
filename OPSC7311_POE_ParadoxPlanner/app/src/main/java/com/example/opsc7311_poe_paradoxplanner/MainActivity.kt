@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         val btnLogOut = findViewById<Button>(R.id.btnLogOut)
         val btnTimeSheetList = findViewById<Button>(R.id.btnTimeSheetList)
         val btnCategoryList= findViewById<Button>(R.id.btnCategoryList)
-val btnGoalTimer = findViewById<Button>(R.id.btnGoalTimer)
+        val btnGoalTimer = findViewById<Button>(R.id.btnGoalTimer)
+        val btnTimer = findViewById<Button>(R.id.btnTimer)
 
         btnGoToCategoryActivity.setOnClickListener {
             val intent = Intent(this, CategoryActivity::class.java)
@@ -55,6 +56,11 @@ val btnGoalTimer = findViewById<Button>(R.id.btnGoalTimer)
 
         btnCategoryList.setOnClickListener {
             val intent = Intent(this, CategoryListActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnTimer.setOnClickListener{
+            val intent = Intent(this, TimerActivity::class.java)
             startActivity(intent)
         }
 

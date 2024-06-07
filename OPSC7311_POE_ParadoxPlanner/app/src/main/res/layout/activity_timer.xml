@@ -7,10 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".TimerActivity">
 
+
     <Spinner
         android:id="@+id/timeSheetSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -20,6 +24,7 @@
         android:text="▶"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeSheetSpinner"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="273dp" />
 
@@ -31,6 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTimer"
         tools:layout_editor_absoluteY="380dp"
         tools:ignore="MissingConstraints" />
 
