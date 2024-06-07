@@ -74,16 +74,6 @@
             android:padding="8dp"
             android:src="@drawable/ic_launcher_background"/>
 
-        <Button
-            android:id="@+id/btnTimer"
-            android:layout_width="68dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="▶"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
-
         <TextView
             android:id="@+id/tvDuration"
             android:layout_width="wrap_content"

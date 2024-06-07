@@ -103,7 +103,7 @@ class TimesheetActivity : AppCompatActivity() {
             val startDate = startDateEditText.text.toString()
             val category = categorySpinner.selectedItem.toString()
             val description = descriptionEditText.text.toString()
-            val duration = calculateDuration().toDouble()
+            val duration = calculateDurationHours().toDouble()
 
             if (timesheetName.isNotEmpty()) {
                 val user = auth.currentUser
@@ -146,7 +146,7 @@ class TimesheetActivity : AppCompatActivity() {
                             .addOnSuccessListener { documentReference ->
                                 Toast.makeText(this, "Timesheet entry added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
                                 // After successful addition, update the category total hours
-                                updateCategoryTotalHours(category, duration.toDouble())
+                                updateCategoryTotalHours(category, duration)
                             }
                             .addOnFailureListener { e ->
                                 Log.w(TimesheetActivity.TAG, "Error adding timesheet entry", e)
@@ -169,6 +169,9 @@ class TimesheetActivity : AppCompatActivity() {
         }
     }
 
+
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null && data.data!= null) {
@@ -176,6 +179,9 @@ class TimesheetActivity : AppCompatActivity() {
             pictureImageView.setImageURI(selectedImageUri) // Display the selected image
         }
     }
+
+
+
 
     private fun initializeDatePickers() {
         startDateEditText.setOnClickListener {
@@ -186,6 +192,9 @@ class TimesheetActivity : AppCompatActivity() {
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
         }
     }
+
+
+
 
     private fun initializeTimePickers() {
         startTimeEditText.setOnClickListener {
@@ -213,7 +222,13 @@ class TimesheetActivity : AppCompatActivity() {
 
 
 
-    private fun calculateDuration(): Long {
+
+
+
+
+
+
+    private fun calculateDurationMinutes(): Long {
         val startTimeText = startTimeEditText.text.toString()
         val endTimeText = endTimeEditText.text.toString()
 
@@ -226,9 +241,8 @@ class TimesheetActivity : AppCompatActivity() {
             val hours = TimeUnit.MILLISECONDS.toHours(diffInMillies)
             val minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillies) % 60
             val totalDurationInSeconds = TimeUnit.MILLISECONDS.toSeconds(diffInMillies)
-
-            // Subtract 10 seconds from the total duration
-            val adjustedDurationInSeconds = totalDurationInSeconds - 10
+            
+            val adjustedDurationInSeconds = totalDurationInSeconds
 
             // Convert back to hours and minutes if needed
             val adjustedHours = TimeUnit.SECONDS.toHours(adjustedDurationInSeconds)
@@ -242,6 +256,37 @@ class TimesheetActivity : AppCompatActivity() {
         }
     }
 
+
+
+
+
+
+
+
+
+    private fun calculateDurationHours(): Long {
+        val startTimeText = startTimeEditText.text.toString()
+        val endTimeText = endTimeEditText.text.toString()
+
+        // Check if both start and end times are not empty
+        if (startTimeText.isNotBlank() && endTimeText.isNotBlank()) {
+            val startTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(startTimeText)
+            val endTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(endTimeText)
+
+            val diffInMillies = TimeUnit.MILLISECONDS.toMillis(endTime.time - startTime.time)
+            val hours = TimeUnit.MILLISECONDS.toHours(diffInMillies)
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillies) % 60
+
+            // Calculate total duration in hours
+            val totalDurationInHours = TimeUnit.MILLISECONDS.toHours(diffInMillies)
+
+            return totalDurationInHours
+        } else {
+            // Handle case where either start or end time is missing
+            Toast.makeText(this, "Please enter both start and end times.", Toast.LENGTH_SHORT).show()
+            return 0L
+        }
+    }
 
 
 

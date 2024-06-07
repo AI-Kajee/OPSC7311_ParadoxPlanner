@@ -45,41 +45,44 @@ class GoalActivity : AppCompatActivity() {
             val currentDate = getCurrentDate()
             val userGoalProgress = 0
 
-            if(minGoal.toDouble()>24 || maxGoal.toDouble()>24){
-                Log.d(GoalActivity.TAG, "Please ensure that your minimum goal and maximum goal is equal to or under 24 hours.")
-                minGoalET.text.clear()
-                maxGoalET.text.clear()
-            }
-
             // Regular expression to match a valid number (integer or decimal)
             val numberPattern = "[+-]?[0-9]*\\.?[0-9]+([eE][+-]?[0-9]+)?".toRegex()
 
             if (minGoal.isNotEmpty() && maxGoal.isNotEmpty()) {
-                if (numberPattern.matches(minGoal) && numberPattern.matches(maxGoal)) {
-                    val user = auth.currentUser
-                    if (user!= null) {
-                        val goalData = hashMapOf(
-                            "userId" to user.uid,
-                            "email" to user.email, // Include the user's email
-                            "minGoal" to minGoal,
-                            "maxGoal" to maxGoal,
-                            "date" to currentDate,
-                            "userGoalProgress" to userGoalProgress
-                        )
 
-                        db.collection("goals").add(goalData)
-                            .addOnSuccessListener { documentReference ->
-                                Toast.makeText(this, "Goals added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w(GoalActivity.TAG, "Error adding goals", e)
-                            }
-                    } else {
-                        Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(this, "Please enter a valid number for the minimum and maximum goal.", Toast.LENGTH_SHORT).show()
+                if(minGoal.toDouble()>24 || maxGoal.toDouble()>24 || minGoal.toDouble()>24 && maxGoal.toDouble()>24){
+                    Log.d(GoalActivity.TAG, "Please ensure that your minimum goal and maximum goal is equal to or under 24 hours.")
+                    minGoalET.text.clear()
+                    maxGoalET.text.clear()
                 }
+                else{
+                    if (numberPattern.matches(minGoal) && numberPattern.matches(maxGoal)) {
+                        val user = auth.currentUser
+                        if (user!= null) {
+                            val goalData = hashMapOf(
+                                "userId" to user.uid,
+                                "email" to user.email, // Include the user's email
+                                "minGoal" to minGoal,
+                                "maxGoal" to maxGoal,
+                                "date" to currentDate,
+                                "userGoalProgress" to userGoalProgress.toString()
+                            )
+
+                            db.collection("goals").add(goalData)
+                                .addOnSuccessListener { documentReference ->
+                                    Toast.makeText(this, "Goals added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w(GoalActivity.TAG, "Error adding goals", e)
+                                }
+                        } else {
+                            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this, "Please enter a valid number for the minimum and maximum goal.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
             } else {
                 Toast.makeText(this, "Please enter the minimum and maximum goal.", Toast.LENGTH_SHORT).show()
             }

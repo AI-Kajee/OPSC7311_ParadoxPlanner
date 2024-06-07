@@ -5,7 +5,6 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +33,11 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         holder.timeSheetName.text = entry.timesheetName
         holder.category.text = entry.category
         holder.startDate.text = entry.startDate
-        holder.duration.text=entry.duration
+        holder.duration.text=entry.duration + "hrs"
+
+
+
+
 
         // Correctly decode the base64 string to a Bitmap and set it as the ImageView's drawable
         val base64Image = entry.image
@@ -70,23 +73,27 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         }
 
 
-        holder.btnTimer.setOnClickListener {
 
-        }
+
 
     }
-
 
     override fun getItemCount(): Int {
         return entryList.size
     }
+
+
+
+    override fun onViewRecycled(holder: MyViewHolder) {
+        super.onViewRecycled(holder)
+    }
+
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val timeSheetName: TextView = itemView.findViewById(R.id.tvTimeSheetName)
         val category: TextView = itemView.findViewById(R.id.tvCategory)
         val startDate: TextView = itemView.findViewById(R.id.tvStartDate)
         val picImageView: ImageView = itemView.findViewById(R.id.pictureImageView)
-        val btnTimer: Button = itemView.findViewById(R.id.btnTimer)
         val duration:TextView=itemView.findViewById(R.id.tvDuration)
     }
 }

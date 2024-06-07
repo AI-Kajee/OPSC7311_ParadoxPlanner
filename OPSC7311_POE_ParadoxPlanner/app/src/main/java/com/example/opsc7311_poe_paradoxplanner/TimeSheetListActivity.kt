@@ -76,9 +76,9 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
         }
     }
 
+
+
     override fun onItemClick(position: Int) {
         val selectedEntry = entryArrayList[position]
-
-
     }
 }
