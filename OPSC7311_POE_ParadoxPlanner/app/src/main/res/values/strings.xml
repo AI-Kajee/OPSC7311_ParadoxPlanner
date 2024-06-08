@@ -27,4 +27,5 @@
     <string name="start">Start</string>
     <string name="goal_timer">GOAL TIMER</string>
     <string name="back">Back</string>
+    <string name="badge_image">badge</string>
 </resources>

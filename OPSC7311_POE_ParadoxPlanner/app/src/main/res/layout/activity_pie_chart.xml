@@ -17,23 +17,38 @@
         android:textColor="#C5B9B9"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/badgeContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
+        android:id="@+id/badgeContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Goals"
-        android:textColor="#C5B9B9"
-        android:textSize="18sp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/pieChart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PP" />
+        app:layout_constraintTop_toBottomOf="@+id/PP">
+
+        <TextView
+            android:id="@+id/badgeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Goals"
+            android:textColor="#C5B9B9"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/badgeImage"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/badge_image"
+            android:src="@drawable/badge" />
+    </LinearLayout>
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
@@ -42,7 +57,7 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/badgeContainer"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintWidth_percent="0.8" />
 
@@ -63,18 +78,24 @@
             android:id="@+id/buttonColors1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:visibility="invisible"
             android:text="Colors 1" />
 
         <Button
             android:id="@+id/buttonColors2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:visibility="invisible"
             android:text="Colors 2" />
 
         <Button
             android:id="@+id/buttonColors3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:visibility="invisible"
             android:text="Colors 3" />
     </LinearLayout>
 

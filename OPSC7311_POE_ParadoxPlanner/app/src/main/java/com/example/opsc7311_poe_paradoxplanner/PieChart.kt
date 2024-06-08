@@ -1,13 +1,16 @@
 package com.example.opsc7311_poe_paradoxplanner
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -19,6 +22,10 @@ class PieChart : AppCompatActivity() {
     private lateinit var pieChart: PieChart
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var buttonColors1: Button
+    private lateinit var buttonColors2: Button
+    private lateinit var buttonColors3: Button
+    private lateinit var badgeCountTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,17 +41,39 @@ class PieChart : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        findViewById<Button>(R.id.buttonColors1).setOnClickListener {
+        buttonColors1 = findViewById(R.id.buttonColors1)
+        buttonColors2 = findViewById(R.id.buttonColors2)
+        buttonColors3 = findViewById(R.id.buttonColors3)
+        badgeCountTextView = findViewById(R.id.badgeCount)
+
+        buttonColors1.setOnClickListener {
             updatePieChartColors(listOf(Color.RED, Color.BLUE))
         }
-        findViewById<Button>(R.id.buttonColors2).setOnClickListener {
+        buttonColors2.setOnClickListener {
             updatePieChartColors(listOf(Color.GREEN, Color.YELLOW))
         }
-        findViewById<Button>(R.id.buttonColors3).setOnClickListener {
+        buttonColors3.setOnClickListener {
             updatePieChartColors(listOf(Color.CYAN, Color.MAGENTA))
         }
 
         loadData()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateButtons(badgeCount: Int) {
+        badgeCountTextView.text = "Number of badges: $badgeCount"
+        if (badgeCount >= 1) {
+            buttonColors1.isEnabled = true
+            buttonColors1.isVisible = true
+        }
+        if (badgeCount >= 3) {
+            buttonColors2.isEnabled = true
+            buttonColors2.isVisible = true
+        }
+        if (badgeCount >= 5) {
+            buttonColors3.isEnabled = true
+            buttonColors3.isVisible = true
+        }
     }
 
     private fun loadData() {
@@ -69,6 +98,7 @@ class PieChart : AppCompatActivity() {
                 }
 
                 setupPieChart(completedGoals, uncompletedGoals, listOf(Color.GRAY, Color.DKGRAY))
+                updateButtons(completedGoals)
             }
             .addOnFailureListener { exception ->
                 Log.w("PieChartActivity", "Error getting documents: ", exception)
@@ -88,6 +118,8 @@ class PieChart : AppCompatActivity() {
         val pieData = PieData(dataSet)
 
         pieChart.data = pieData
+        pieChart.description.isEnabled = false // Disable the description
+        pieChart.legend.isEnabled = false // Disable the legend (color key)
         pieChart.invalidate() // refresh the chart
     }
 
