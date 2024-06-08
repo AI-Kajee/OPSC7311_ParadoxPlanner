@@ -125,6 +125,6 @@ class CategoryListActivity : AppCompatActivity() {
     }
 
     private fun EventChangeListener() {
-        // Your existing EventChangeListener code
+
     }
 }

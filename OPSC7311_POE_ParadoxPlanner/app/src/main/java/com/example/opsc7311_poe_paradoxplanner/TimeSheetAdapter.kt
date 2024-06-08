@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
+class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>, var timesheetDurations: Double) :
     RecyclerView.Adapter<TimeSheetAdapter.MyViewHolder>() {
 
     interface OnItemClickListener {
@@ -22,10 +22,25 @@ class TimeSheetAdapter(private val entryList: ArrayList<TimesheetEntry>) :
         this.listener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeSheetAdapter.MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return MyViewHolder(itemView)
     }
+
+
+    fun updateTimesheets(targetDurations: Double) {
+        // Filter the categories based on the targetDurations
+        val filteredTimesheets = entryList.filter {
+            it.duration!= null &&
+                    it.duration.toDouble() == targetDurations
+        }
+        // Update the adapter with the filtered list
+        entryList.clear()
+        entryList.addAll(filteredTimesheets)
+        notifyDataSetChanged() // Notify the adapter that the data has changed
+    }
+
+
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 

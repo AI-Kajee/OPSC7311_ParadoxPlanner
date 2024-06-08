@@ -26,7 +26,7 @@
         android:id="@+id/timesheetSeekBar"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:max="12"
+        android:max="100"
         android:progress="0"
         android:progressTint="@color/black"
         android:thumbTint="@color/black"
