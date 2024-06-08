@@ -18,6 +18,9 @@
         android:theme="@style/Theme.OPSC7311_POE_ParadoxPlanner"
         tools:targetApi="31">
         <activity
+            android:name=".PieChart"
+            android:exported="false" />
+        <activity
             android:name=".NoteActivity"
             android:exported="false" />
         <activity
