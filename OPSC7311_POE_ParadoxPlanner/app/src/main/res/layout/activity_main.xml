@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="256dp"
-        android:layout_height="280dp"
+        android:layout_width="240dp"
+        android:layout_height="224dp"
         app:layout_constraintBottom_toTopOf="@+id/btnCategoryList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,10 +85,26 @@
         app:layout_constraintTop_toBottomOf="@+id/btnGoalTimer" />
 
     <Button
+        android:id="@+id/btnGoToPieChartActivity"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/rectangle_button"
+
+
+        android:text="Go to Pie Chart Activity"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogOut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTimer"
+        app:layout_constraintVertical_bias="0.066" />
+
+    <Button
         android:id="@+id/btnLogOut"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/rectangle_button"
         android:text="Log Out"
         app:layout_constraintEnd_toEndOf="parent"

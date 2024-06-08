@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         val btnCategoryList= findViewById<Button>(R.id.btnCategoryList)
         val btnGoalTimer = findViewById<Button>(R.id.btnGoalTimer)
         val btnTimer = findViewById<Button>(R.id.btnTimer)
+        val btnGoToPieChartActivity = findViewById<Button>(R.id.btnGoToPieChartActivity)
+
 
         btnGoToCategoryActivity.setOnClickListener {
             val intent = Intent(this, CategoryActivity::class.java)
@@ -63,6 +65,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, TimerActivity::class.java)
             startActivity(intent)
         }
+
+        btnGoToPieChartActivity.setOnClickListener {
+            val intent = Intent(this, PieChart::class.java)
+            startActivity(intent)
+        }
+
 
     }
 }
