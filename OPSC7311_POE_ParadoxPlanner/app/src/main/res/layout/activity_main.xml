@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="240dp"
-        android:layout_height="224dp"
+        android:layout_width="159dp"
+        android:layout_height="135dp"
         app:layout_constraintBottom_toTopOf="@+id/btnCategoryList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,10 +20,11 @@
         android:id="@+id/btnCategoryList"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
         android:text="Category List"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
@@ -31,22 +32,23 @@
         android:id="@+id/btnGoToCategoryActivity"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rectangle_button"
         android:text="Create a Category"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCategoryList"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCategoryList" />
 
     <Button
         android:id="@+id/btnTimeSheetList"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rectangle_button"
         android:text="Time Sheet List"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGoToCategoryActivity" />
 
@@ -54,10 +56,11 @@
         android:id="@+id/btnGoToTimesheetActivity"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rectangle_button"
         android:text="Create a timesheet"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTimeSheetList" />
 
@@ -65,10 +68,11 @@
         android:id="@+id/btnGoalTimer"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rectangle_button"
         android:text="Goal Timer Screen"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGoToTimesheetActivity" />
 
@@ -76,7 +80,7 @@
         android:id="@+id/btnTimer"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
         android:text="Timer"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,28 +92,36 @@
         android:id="@+id/btnGoToPieChartActivity"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
-
-
         android:text="Go to Pie Chart Activity"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogOut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTimer"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintTop_toBottomOf="@+id/btnTimer" />
+
+    <Button
+        android:id="@+id/btnNoteScreen"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectangle_button"
+        android:text="Notes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoToPieChartActivity" />
 
     <Button
         android:id="@+id/btnLogOut"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
         android:text="Log Out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTimer" />
+        app:layout_constraintTop_toBottomOf="@+id/btnNoteScreen" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
