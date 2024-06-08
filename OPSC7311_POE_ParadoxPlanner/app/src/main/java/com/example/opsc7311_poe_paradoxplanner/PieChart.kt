@@ -3,6 +3,7 @@ package com.example.opsc7311_poe_paradoxplanner
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -33,6 +34,16 @@ class PieChart : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
+        findViewById<Button>(R.id.buttonColors1).setOnClickListener {
+            updatePieChartColors(listOf(Color.RED, Color.BLUE))
+        }
+        findViewById<Button>(R.id.buttonColors2).setOnClickListener {
+            updatePieChartColors(listOf(Color.GREEN, Color.YELLOW))
+        }
+        findViewById<Button>(R.id.buttonColors3).setOnClickListener {
+            updatePieChartColors(listOf(Color.CYAN, Color.MAGENTA))
+        }
+
         loadData()
     }
 
@@ -57,26 +68,32 @@ class PieChart : AppCompatActivity() {
                     }
                 }
 
-                setupPieChart(completedGoals, uncompletedGoals)
+                setupPieChart(completedGoals, uncompletedGoals, listOf(Color.GRAY, Color.DKGRAY))
             }
             .addOnFailureListener { exception ->
-                Log.w("PieChart", "Error getting documents: ", exception)
+                Log.w("PieChartActivity", "Error getting documents: ", exception)
             }
     }
 
-    private fun setupPieChart(completedGoals: Int, uncompletedGoals: Int) {
+    private fun setupPieChart(completedGoals: Int, uncompletedGoals: Int, colors: List<Int>) {
         val entries = listOf(
             PieEntry(completedGoals.toFloat(), "Completed Goals"),
             PieEntry(uncompletedGoals.toFloat(), "Uncompleted Goals")
         )
 
         val dataSet = PieDataSet(entries, "Goals")
-        dataSet.colors = listOf(Color.GREEN, Color.RED)
-        dataSet.valueTextSize = 16f
+        dataSet.colors = colors
+        dataSet.valueTextSize = 18f
 
         val pieData = PieData(dataSet)
 
         pieChart.data = pieData
+        pieChart.invalidate() // refresh the chart
+    }
+
+    private fun updatePieChartColors(colors: List<Int>) {
+        val dataSet = pieChart.data?.dataSet as? PieDataSet ?: return
+        dataSet.colors = colors
         pieChart.invalidate() // refresh the chart
     }
 }
