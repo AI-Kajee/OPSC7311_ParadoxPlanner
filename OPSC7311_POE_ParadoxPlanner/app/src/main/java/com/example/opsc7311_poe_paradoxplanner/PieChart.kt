@@ -64,15 +64,12 @@ class PieChart : AppCompatActivity() {
         badgeCountTextView.text = "Number of badges: $badgeCount"
         if (badgeCount >= 1) {
             buttonColors1.isEnabled = true
-            buttonColors1.isVisible = true
         }
         if (badgeCount >= 3) {
             buttonColors2.isEnabled = true
-            buttonColors2.isVisible = true
         }
         if (badgeCount >= 5) {
             buttonColors3.isEnabled = true
-            buttonColors3.isVisible = true
         }
     }
 

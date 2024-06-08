@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:text="Colors 1" />
 
         <Button
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:text="Colors 2" />
 
         <Button
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:text="Colors 3" />
     </LinearLayout>
 
