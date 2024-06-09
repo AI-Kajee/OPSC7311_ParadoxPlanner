@@ -35,6 +35,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
@@ -65,6 +66,7 @@ dependencies {
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.3") // Check for the latest version
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
