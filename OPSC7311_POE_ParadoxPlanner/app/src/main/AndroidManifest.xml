@@ -21,14 +21,17 @@
             android:name=".PieChart"
             android:exported="false" />
         <activity
+        android:name=".GraphActivity"
+        android:exported="false" />
+        <activity
             android:name=".NoteActivity"
             android:exported="false" />
         <activity
             android:name=".TimerActivity"
             android:exported="false" />
-        <activity
-            android:name=".ViewClickedImageActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ViewClickedImageActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".TimesheetEntry"
             android:exported="false" />
