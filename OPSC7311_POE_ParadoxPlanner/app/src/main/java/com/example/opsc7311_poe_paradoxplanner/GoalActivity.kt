@@ -8,11 +8,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,7 +29,7 @@ class GoalActivity : AppCompatActivity() {
     private lateinit var maxGoalET: EditText
     private lateinit var saveGoalButton: Button
     private lateinit var backButton: Button
-    private lateinit var barChart: BarChart
+    private lateinit var lineChart: LineChart
 
     companion object {
         private const val TAG = "Goal"
@@ -46,7 +46,7 @@ class GoalActivity : AppCompatActivity() {
         maxGoalET = findViewById(R.id.etMaxGoals)
         saveGoalButton = findViewById(R.id.btnSaveGoals)
         backButton = findViewById(R.id.btnBack)
-        barChart = findViewById(R.id.barChart)
+        lineChart = findViewById(R.id.lineChart)
 
         saveGoalButton.setOnClickListener {
             Log.d(TAG, "Save Goals button clicked")
@@ -110,7 +110,7 @@ class GoalActivity : AppCompatActivity() {
         db.collection("goals")
             .get()
             .addOnSuccessListener { result ->
-                val barEntries = ArrayList<BarEntry>()
+                val entries = ArrayList<Entry>()
                 var maxGoal = 0f
                 var minGoal = 0f
                 result.documents.forEach { document ->
@@ -120,39 +120,44 @@ class GoalActivity : AppCompatActivity() {
                     val date = document.getString("date") ?: ""
 
                     val dateInMillis = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(date)?.time ?: 0
-                    barEntries.add(BarEntry(dateInMillis.toFloat(), userGoalProgress))
+                    entries.add(Entry(dateInMillis.toFloat(), userGoalProgress))
 
                     if (max > maxGoal) maxGoal = max
                     if (minGoal == 0f || min < minGoal) minGoal = min
                 }
-                displayGraph(barEntries, maxGoal, minGoal)
+                displayGraph(entries, maxGoal, minGoal)
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
             }
     }
 
-    private fun displayGraph(barEntries: ArrayList<BarEntry>, maxGoal: Float, minGoal: Float) {
-        val barDataSet = BarDataSet(barEntries, "Hours Worked")
-        val barData = BarData(barDataSet)
+    private fun displayGraph(entries: ArrayList<Entry>, maxGoal: Float, minGoal: Float) {
+        val lineDataSet = LineDataSet(entries, "Hours Worked")
+        lineDataSet.color = Color.BLUE
+        lineDataSet.setCircleColor(Color.BLACK)
+        lineDataSet.lineWidth = 2f
+        lineDataSet.valueTextColor = Color.BLACK
+        lineDataSet.valueTextSize = 12f
 
-        barDataSet.color = Color.BLUE
-        barDataSet.valueTextColor = Color.BLACK
-        barDataSet.valueTextSize = 16f
+        val lineData = LineData(lineDataSet)
+        lineChart.data = lineData
 
-        barChart.data = barData
-        barChart.description.isEnabled = false
-        barChart.animateY(1000)
+        lineChart.description.isEnabled = false
+        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        lineChart.axisLeft.axisMinimum = minGoal
+        lineChart.axisLeft.axisMaximum = maxGoal
+        lineChart.axisRight.isEnabled = false
 
         // Formatting X axis to display date
-        barChart.xAxis.valueFormatter = object : ValueFormatter() {
+        lineChart.xAxis.valueFormatter = object : ValueFormatter() {
             private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             override fun getFormattedValue(value: Float): String {
                 return dateFormat.format(Date(value.toLong()))
             }
         }
 
-        barChart.invalidate() // Refresh the chart
+        lineChart.invalidate() // Refresh the chart
     }
 
     private fun getCurrentDate(): String {
