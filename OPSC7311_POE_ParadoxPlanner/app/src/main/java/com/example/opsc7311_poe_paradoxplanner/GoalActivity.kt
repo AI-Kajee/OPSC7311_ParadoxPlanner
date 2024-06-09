@@ -16,10 +16,10 @@ class GoalActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-    private lateinit var minGoalET : EditText
-    private lateinit var maxGoalET : EditText
-    private lateinit var saveGoalButton : Button
-    private lateinit var backButton : Button
+    private lateinit var minGoalET: EditText
+    private lateinit var maxGoalET: EditText
+    private lateinit var saveGoalButton: Button
+    private lateinit var backButton: Button
 
     companion object {
         private const val TAG = "Goal"
@@ -35,7 +35,7 @@ class GoalActivity : AppCompatActivity() {
         minGoalET = findViewById(R.id.etMinGoals)
         maxGoalET = findViewById(R.id.etMaxGoals)
         saveGoalButton = findViewById(R.id.btnSaveGoals)
-        backButton=findViewById(R.id.btnBack)
+        backButton = findViewById(R.id.btnBack)
 
         saveGoalButton.setOnClickListener {
             Log.d(GoalActivity.TAG, "Save Goals button clicked")
@@ -50,12 +50,11 @@ class GoalActivity : AppCompatActivity() {
 
             if (minGoal.isNotEmpty() && maxGoal.isNotEmpty()) {
 
-                if(minGoal.toDouble()>24 || maxGoal.toDouble()>24 || minGoal.toDouble()>24 && maxGoal.toDouble()>24){
+                if (minGoal.toDouble() > 24 || maxGoal.toDouble() > 24 || minGoal.toDouble() > 24 && maxGoal.toDouble() > 24) {
                     Log.d(GoalActivity.TAG, "Please ensure that your minimum goal and maximum goal is equal to or under 24 hours.")
                     minGoalET.text.clear()
                     maxGoalET.text.clear()
-                }
-                else{
+                } else {
                     if (numberPattern.matches(minGoal) && numberPattern.matches(maxGoal)) {
                         val user = auth.currentUser
                         if (user!= null) {
@@ -88,14 +87,11 @@ class GoalActivity : AppCompatActivity() {
             }
         }
 
-
         backButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
-
-
     }
 
     fun getCurrentDate(): String {
@@ -103,5 +99,4 @@ class GoalActivity : AppCompatActivity() {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         return formatter.format(currentDate)
     }
-
 }
