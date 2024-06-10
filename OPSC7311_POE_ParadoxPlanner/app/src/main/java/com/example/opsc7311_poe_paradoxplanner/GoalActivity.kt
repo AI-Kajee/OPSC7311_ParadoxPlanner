@@ -59,7 +59,7 @@ class GoalActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (minGoal >= maxGoal) {
+            if (minGoal.toDouble() > maxGoal.toDouble()) {
                 Toast.makeText(this, "Min goal cannot be > or = to maximum goal.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
