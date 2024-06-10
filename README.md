@@ -2,6 +2,8 @@
 ## Click thumbnail below for OPSC7311 POE PART 2 Video Presentation
 [![Watch the video](https://img.youtube.com/vi/gHOKAelVpxQ/0.jpg)](https://youtu.be/gHOKAelVpxQ)
 
+## Click thumbnail below for OPSC7311 POE PART 3 Video Presentation
+[![Watch the video](https://img.youtube.com/vi/jy3sYFlMLp8/0.jpg)](https://youtu.be/jy3sYFlMLp8)
 Welcome to Paradox Planner, your ultimate tool for organizing tasks, tracking time, and setting goals efficiently.
 
 ## Features
