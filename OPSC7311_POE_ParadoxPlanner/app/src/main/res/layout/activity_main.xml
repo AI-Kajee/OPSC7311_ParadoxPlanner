@@ -30,18 +30,6 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btnGoToCategoryActivity"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rectangle_button"
-        android:text="Add Category"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnCategoryList"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
         android:id="@+id/btnTimeSheetList"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -50,19 +38,7 @@
         android:text="Timesheet List"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnGoToCategoryActivity"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/btnGoToTimesheetActivity"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rectangle_button"
-        android:text="Add Timesheet"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnTimeSheetList"
+        app:layout_constraintTop_toBottomOf="@id/btnCategoryList"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
@@ -71,10 +47,10 @@
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
-        android:text="Add + View Goals"
+        android:text="Add Goal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnGoToTimesheetActivity"
+        app:layout_constraintTop_toBottomOf="@id/btnTimeSheetList"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button

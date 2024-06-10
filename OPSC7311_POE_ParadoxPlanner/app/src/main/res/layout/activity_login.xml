@@ -98,7 +98,7 @@
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:text="Don't have an account? Click here to Register!"
         app:layout_constraintEnd_toEndOf="parent"

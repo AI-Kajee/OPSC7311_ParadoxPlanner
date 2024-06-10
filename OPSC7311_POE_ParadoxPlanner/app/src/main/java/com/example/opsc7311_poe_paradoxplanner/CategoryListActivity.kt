@@ -3,6 +3,7 @@ package com.example.opsc7311_poe_paradoxplanner
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -17,7 +18,7 @@ class CategoryListActivity : AppCompatActivity() {
     private lateinit var categoryDC: ArrayList<CategoryDC>
     private lateinit var categoryListAdapter: CategoryListAdapter
     private lateinit var db: FirebaseFirestore
-    private lateinit var btnBackm: Button
+    private lateinit var btnAddCategoryButton: ImageButton
     private lateinit var categorySeekBar: SeekBar
     private lateinit var seekbarValueDisplay : TextView
 
@@ -28,7 +29,7 @@ class CategoryListActivity : AppCompatActivity() {
         categoryListRecyclerView = findViewById(R.id.categoryListRecyclerView)
         categoryListRecyclerView.layoutManager = LinearLayoutManager(this)
         categoryListRecyclerView.setHasFixedSize(true)
-        btnBackm = findViewById(R.id.btnBackm)
+        btnAddCategoryButton = findViewById(R.id.AddCategoryButton)
         categorySeekBar = findViewById(R.id.categorySeekBar)
         seekbarValueDisplay=findViewById(R.id.tvSeekbarValue)
 
@@ -40,8 +41,8 @@ class CategoryListActivity : AppCompatActivity() {
 
         EventChangeListener()
 
-        btnBackm.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+        btnAddCategoryButton.setOnClickListener {
+            val intent = Intent(this, CategoryActivity::class.java)
             startActivity(intent)
             finish()
         }

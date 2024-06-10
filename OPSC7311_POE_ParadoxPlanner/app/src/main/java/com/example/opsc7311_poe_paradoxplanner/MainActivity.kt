@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        val btnGoToCategoryActivity = findViewById<Button>(R.id.btnGoToCategoryActivity)
-        val btnGoToTimesheetActivity = findViewById<Button>(R.id.btnGoToTimesheetActivity)
         val btnLogOut = findViewById<Button>(R.id.btnLogOut)
         val btnTimeSheetList = findViewById<Button>(R.id.btnTimeSheetList)
         val btnCategoryList= findViewById<Button>(R.id.btnCategoryList)
@@ -29,11 +27,6 @@ class MainActivity : AppCompatActivity() {
         val btnGoToPieChartActivity = findViewById<Button>(R.id.btnGoToPieChartActivity)
         val btnNoteScreen = findViewById<Button>(R.id.btnNoteScreen)
         val btnGraph = findViewById<Button>(R.id.btnGraph)
-
-        btnGoToCategoryActivity.setOnClickListener {
-            val intent = Intent(this, CategoryActivity::class.java)
-            startActivity(intent)
-        }
 
         btnGraph.setOnClickListener {
             val intent = Intent(this, GraphActivity::class.java)
@@ -45,10 +38,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnGoToTimesheetActivity.setOnClickListener {
-            val intent = Intent(this, TimesheetActivity::class.java)
-            startActivity(intent)
-        }
         btnGoalTimer.setOnClickListener {
             val intent = Intent(this, GoalActivity::class.java)
             startActivity(intent)

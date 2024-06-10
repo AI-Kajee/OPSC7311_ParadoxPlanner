@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -24,7 +25,7 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
     private lateinit var timeSheetAdapter: TimeSheetAdapter
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
-    private lateinit var btnBack: Button
+    private lateinit var btnAddTimeSheetButton: ImageButton
     private lateinit var timesheetSeekBar: SeekBar
     private lateinit var seekbarValueDisplay : TextView
 
@@ -46,7 +47,7 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
 
         timeSheetRecyclerView.adapter = timeSheetAdapter
 
-        btnBack = findViewById(R.id.btnBack)
+        btnAddTimeSheetButton = findViewById(R.id.AddTimesheetButton)
 
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
@@ -177,8 +178,8 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
                 }
             })
 
-        btnBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+        btnAddTimeSheetButton.setOnClickListener {
+            val intent = Intent(this, TimesheetActivity::class.java)
             startActivity(intent)
             finish()
         }
