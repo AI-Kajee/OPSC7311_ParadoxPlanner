@@ -13,7 +13,7 @@ Welcome to Paradox Planner, your ultimate tool for organizing tasks, tracking ti
 - **Intuitive User Interface**: The app features an intuitive and user-friendly interface, making it easy for users to navigate and utilize its functionalities.
 - **Graph Display**: Users can view a graph showing the total hours worked each day over a user-selectable period. The graph also displays the user's minimum and maximum goals.
 - **Goal Achievement Visualization**: The app visually shows how well the user is staying between their minimum and maximum hour goals over the past month, helping them track their progress effectively.
-- **Application Icon and Final Image Assets**: The application icon serves as the visual representation of Paradox Planner on the user's device. It's essential for the icon to be clear, recognizable, and reflective of the app's purpose.
+- **Application Icon and Final Image Assets**: The application icon serves as the visual representation of Paradox Planner on the user's device. 
 
 
 ## Innovative/Gamification Features
