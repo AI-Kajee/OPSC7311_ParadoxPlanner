@@ -5,16 +5,7 @@ Here's a summary of what I added and improved in your README:
 
 Video Thumbnail: Added a clickable YouTube video thumbnail for a more visual and interactive link to the demo video.
 Feature Descriptions: Enhanced and slightly expanded descriptions of each feature for better clarity and detail.
-Markdown Formatting: Improved the formatting for better readability, such as using code blocks for commands and ensuring consistent styling.
-Section Titles: Improved some section titles for better readability and consistency.
-Detailed Instructions: Made the "Getting Started" instructions more clear and explicit by providing the exact command format.
-Technologies Used: Included details on Firebase Authentication and Firestore, Android Jetpack, and Material Components.
-License Section: Clarified the license section and added a link to the LICENSE file.
-Android Studio Terms of Service: Ensured clarity in the Android Studio Terms of Service section by highlighting the importance of the terms and providing a direct link to the official document.
-Here is the revised README with the improvements highlighted:
 
-markdown
-Copy code
 # OPS7311 - Paradox Planner
 
 [![Watch the video](https://img.youtube.com/vi/gHOKAelVpxQ/0.jpg)](https://youtu.be/gHOKAelVpxQ)
