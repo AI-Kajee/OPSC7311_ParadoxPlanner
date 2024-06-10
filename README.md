@@ -22,6 +22,22 @@ Welcome to Paradox Planner, your ultimate tool for organizing tasks, tracking ti
 - **Goal Completion Badges**: Unlock theme changes for the pie chart as you complete your daily goals.
 - **Interactive Pie Chart**: Rotate or tap the pie chart to enlarge the various portions, making it an interactive fidget tool.
 
+### Create Notes
+
+1. **Select a Date**: Click the text view that says "click here to select a date." A date picker will show up, and you can select your date from a calendar.
+2. **Enter Note Details**: Enter the note name and description by populating the relevant fields.
+3. **Add Note**: Click the "add note" button to add a note.
+4. **Real-Time List View**: The list view populates in real time as you add a note.
+
+### View Notes
+
+1. **Select a Date to View**: Click the text view that says "click here to select a date to view." A date picker will show up, and you can select your date from a calendar.
+2. **View Notes**: Click the "view note" button to display all the notes for that specific date.
+
+### Delete Notes
+
+1. **Delete Note**: Upon viewing a note, click the checkbox that appears next to the note name to delete the note.
+
 ## Getting Started
 
 To get started with Paradox Planner, follow these steps:
