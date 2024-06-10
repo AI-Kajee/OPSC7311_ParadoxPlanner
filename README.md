@@ -14,16 +14,14 @@ Welcome to Paradox Planner, your ultimate tool for organizing tasks, tracking ti
 - **Graph Display**: Users can view a graph showing the total hours worked each day over a user-selectable period. The graph also displays the user's minimum and maximum goals.
 - **Goal Achievement Visualization**: The app visually shows how well the user is staying between their minimum and maximum hour goals over the past month, helping them track their progress effectively.
 
-
+## Application Icon and Final Image Assets
+- The application icon serves as the visual representation of Paradox Planner on the user's device and Final image assets which include all graphical elements used within the app, such as buttons, backgrounds, and icons for various features.  
 
 ## Innovative/Gamification Features
 
 - **Visual Format(Piechart)**: Measure how well you are staying between your minimum and maximum hour goals, represented in a pie chart.
 - **Goal Completion Badges**: Unlock theme changes for the pie chart as you complete your daily goals.
 - **Interactive Pie Chart**: Rotate or tap the pie chart to enlarge the various portions, making it an interactive fidget tool.
-
-## Application Icon and Final Image Assets
-- The application icon serves as the visual representation of Paradox Planner on the user's device and Final image assets which include all graphical elements used within the app, such as buttons, backgrounds, and icons for various features.  
 
 
 ### Create Notes
