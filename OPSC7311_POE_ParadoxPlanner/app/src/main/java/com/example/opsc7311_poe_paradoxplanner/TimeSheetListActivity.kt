@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.SeekBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import kotlin.math.roundToInt
 
 class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickListener {
     private lateinit var timeSheetRecyclerView: RecyclerView
@@ -24,6 +26,7 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
     private lateinit var auth: FirebaseAuth
     private lateinit var btnBack: Button
     private lateinit var timesheetSeekBar: SeekBar
+    private lateinit var seekbarValueDisplay : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,8 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
         timeSheetRecyclerView.setHasFixedSize(true)
 
         timesheetSeekBar = findViewById(R.id.timesheetSeekBar)
+
+        seekbarValueDisplay=findViewById(R.id.tvSeekbarValue)
 
         entryArrayList = arrayListOf()
 
@@ -60,9 +65,11 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // Convert the SeekBar's progress to a Double representing the timesheet durations
                 val targetDurations = progress.toDouble()
+
                 // Display the current SeekBar value
-                Toast.makeText(this@TimeSheetListActivity, "Current SeekBar Value: $targetDurations", Toast.LENGTH_SHORT).show()
-                // Fetch categories from Firestore where totalHours equals the SeekBar's value
+                seekbarValueDisplay.text="$targetDurations"
+
+                // Fetch timesheets from Firestore where targetDurations equals the SeekBar's value
                 fetchTimesheets(targetDurations)
             }
 
@@ -85,9 +92,10 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
     private fun fetchTimesheets(targetDuration: Double) {
         db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
+
         if (currentUser!= null) {
             val query = db.collection("timesheet")
-                .whereEqualTo("userId", currentUser.uid) // Filter categories by the current user's ID
+                .whereEqualTo("userId", currentUser.uid) // Filter timesheets by the current user's ID
 
             query.addSnapshotListener { value, error ->
                 if (error!= null) {
@@ -102,10 +110,20 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
                         timesheet?.let { entry ->
                             // Attempt to parse the duration string to a Double
                             val durationAsDouble = entry.duration?.toDouble()
-                            // Only add the entry if the parsed duration matches the targetDuration
-                            if (durationAsDouble!= null && durationAsDouble == targetDuration) {
+
+                            if (durationAsDouble!= null && durationAsDouble.roundToInt() == targetDuration.roundToInt()) {
                                 entryArrayList.add(entry)
                             }
+
+                            else if (durationAsDouble!= null && targetDuration==100.0 && durationAsDouble > 100) {
+                                entryArrayList.add(entry)
+                            }
+
+                            else{
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+
                         }
                     }
                     timeSheetAdapter.notifyDataSetChanged()

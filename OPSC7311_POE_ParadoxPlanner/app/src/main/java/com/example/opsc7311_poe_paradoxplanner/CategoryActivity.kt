@@ -50,6 +50,8 @@ class CategoryActivity : AppCompatActivity() {
                     db.collection("categories").add(categoryData)
                         .addOnSuccessListener { documentReference ->
                             Toast.makeText(this, "Category added: ${documentReference.id}", Toast.LENGTH_SHORT).show()
+                            // Clear the categoryNameEditText after successfully adding the category
+                            categoryNameEditText.setText("")
                         }
                         .addOnFailureListener { e ->
                             Log.w(TAG, "Error adding category", e)

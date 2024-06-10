@@ -8,50 +8,61 @@
     android:layout_height="match_parent"
     tools:context=".NoteActivity">
 
+    <!-- Task Name -->
+
+    <!-- Task Description -->
+
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="368dp"
-        android:layout_height="29dp"
-        android:text="NOTE TAKER"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="128dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif-black"
+        android:text="NOTES"
+        android:textColor="#D0C6D1"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.572"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvSelectDate"
         android:layout_width="367dp"
         android:layout_height="41dp"
-        android:text="Double Click To Select Date"
+        android:layout_marginTop="36dp"
+        android:hint="Click Here To Select A Date"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
-    <!-- Task Name -->
-
-    <!-- Task Description -->
     <EditText
         android:id="@+id/tvTaskName"
         android:layout_width="367dp"
         android:layout_height="43dp"
         android:layout_marginTop="16dp"
         android:inputType="text"
-        android:text="Task Name"
+        android:hint="Task Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSelectDate" />
 
+    <!-- Add Note Button -->
     <EditText
         android:id="@+id/tvTaskDesc"
         android:layout_width="370dp"
         android:layout_height="46dp"
+        android:layout_marginTop="20dp"
         android:inputType="textMultiLine"
-        android:text="Task Description"
+        android:hint="Task Description"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskName" />
 
-    <!-- Add Note Button -->
     <Button
         android:id="@+id/btnAddNote"
         android:layout_width="wrap_content"
@@ -62,41 +73,50 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Notes List -->
+
+    <!-- Select Date To View -->
+
+    <!-- View Note Button -->
+
     <ListView
         android:id="@+id/lstNotes"
         android:layout_width="395dp"
         android:layout_height="209dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddNote"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/btnAddNote" />
 
-    <!-- Select Date To View -->
     <TextView
         android:id="@+id/tvSelectDateToView"
-        android:layout_width="393dp"
-        android:layout_height="32dp"
-        android:text="Double Click To Select Date To View"
-        app:layout_constraintTop_toBottomOf="@+id/lstNotes"
+        android:layout_width="376dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        android:hint="Click Here To Select Date To View"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/lstNotes" />
 
-    <!-- View Note Button -->
     <Button
         android:id="@+id/btnViewNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="View Note"
-        app:layout_constraintTop_toBottomOf="@+id/tvSelectDateToView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectDateToView" />
 
     <Button
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Back"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewNote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnViewNote" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

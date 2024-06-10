@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val btnTimer = findViewById<Button>(R.id.btnTimer)
         val btnGoToPieChartActivity = findViewById<Button>(R.id.btnGoToPieChartActivity)
         val btnNoteScreen = findViewById<Button>(R.id.btnNoteScreen)
-val btnGraph = findViewById<Button>(R.id.btnGraph)
+        val btnGraph = findViewById<Button>(R.id.btnGraph)
 
         btnGoToCategoryActivity.setOnClickListener {
             val intent = Intent(this, CategoryActivity::class.java)

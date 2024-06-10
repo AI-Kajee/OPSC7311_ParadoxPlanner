@@ -34,6 +34,7 @@ class TimerActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "TimerActivity"
+        private const val TIMER_PREFS = "timerPrefs"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,12 +72,29 @@ class TimerActivity : AppCompatActivity() {
 
 
 
+
+
+
+
+        // Load saved start time and running state from SharedPreferences
+        val sharedPreferences = getSharedPreferences(TIMER_PREFS, MODE_PRIVATE)
+        startTime = sharedPreferences.getLong("startTime", 0L)
+        isTimerRunning = sharedPreferences.getBoolean("isTimerRunning", false)
+
+
         btnTimer.setOnClickListener {
             if (!isTimerRunning) {
                 // Start the timer
                 startTime = SystemClock.elapsedRealtime()
                 isTimerRunning = true
                 Toast.makeText(this, "Timer Started", Toast.LENGTH_SHORT).show()
+
+                // Save start time and running state to SharedPreferences
+                val editor = sharedPreferences.edit()
+                editor.putLong("startTime", startTime)
+                editor.putBoolean("isTimerRunning", isTimerRunning)
+                editor.apply()
+
             } else {
                 // Stop the timer and calculate elapsed time
                 val currentTime = SystemClock.elapsedRealtime()
@@ -100,6 +118,12 @@ class TimerActivity : AppCompatActivity() {
 
                 // Now call updateTimesheetDuration and use the selected timesheet name from the spinner
                 updateTimesheetDuration(timesheetName, elapsedTimeHours.toDouble())
+
+                // Save the new start time and running state to SharedPreferences
+                val editor = sharedPreferences.edit()
+                editor.putLong("startTime", startTime)
+                editor.putBoolean("isTimerRunning", false)
+                editor.apply()
             }
         }
 

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.SeekBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ class CategoryListActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var btnBackm: Button
     private lateinit var categorySeekBar: SeekBar
+    private lateinit var seekbarValueDisplay : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,7 @@ class CategoryListActivity : AppCompatActivity() {
         categoryListRecyclerView.setHasFixedSize(true)
         btnBackm = findViewById(R.id.btnBackm)
         categorySeekBar = findViewById(R.id.categorySeekBar)
+        seekbarValueDisplay=findViewById(R.id.tvSeekbarValue)
 
         categoryDC = arrayListOf()
 
@@ -48,8 +51,10 @@ class CategoryListActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 // Convert the SeekBar's progress to a Double representing the total hours
                 val targetTotalHours = progress.toDouble()
+
                 // Display the current SeekBar value
-                Toast.makeText(this@CategoryListActivity, "Current SeekBar Value: $targetTotalHours", Toast.LENGTH_SHORT).show()
+                seekbarValueDisplay.text="$targetTotalHours"
+
                 // Fetch categories from Firestore where totalHours equals the SeekBar's value
                 fetchCategories(targetTotalHours)
             }
@@ -66,17 +71,18 @@ class CategoryListActivity : AppCompatActivity() {
         })
     }
 
+
     private fun fetchCategories(targetTotalHours: Double) {
         db = FirebaseFirestore.getInstance()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser!= null) {
-
-            if(targetTotalHours==100.0){
-                val query2 = db.collection("categories")
+            if (targetTotalHours >= 100.0) {
+                // Query for categories with totalHours of 100 or greater
+                val query = db.collection("categories")
                     .whereEqualTo("userId", currentUser.uid) // Filter categories by the current user's ID
+                    .whereGreaterThanOrEqualTo("totalHours", 100.0) // Filter categories where totalHours is 100 or greater
 
-
-                query2.addSnapshotListener { value, error ->
+                query.addSnapshotListener { value, error ->
                     if (error!= null) {
                         // Handle error
                         return@addSnapshotListener
@@ -91,19 +97,14 @@ class CategoryListActivity : AppCompatActivity() {
                         categoryListAdapter.notifyDataSetChanged()
                     }
                 }
-            }else if(targetTotalHours<100.0) {
+            } else {
+                // Query for categories with totalHours equal to the SeekBar's value
                 val query = db.collection("categories")
-                    .whereEqualTo(
-                        "userId",
-                        currentUser.uid
-                    ) // Filter categories by the current user's ID
-                    .whereEqualTo(
-                        "totalHours",
-                        targetTotalHours
-                    ) // Filter categories where totalHours equals the SeekBar's value
+                    .whereEqualTo("userId", currentUser.uid) // Filter categories by the current user's ID
+                    .whereEqualTo("totalHours", targetTotalHours) // Filter categories where totalHours equals the SeekBar's value
 
                 query.addSnapshotListener { value, error ->
-                    if (error != null) {
+                    if (error!= null) {
                         // Handle error
                         return@addSnapshotListener
                     }
@@ -123,6 +124,7 @@ class CategoryListActivity : AppCompatActivity() {
             Toast.makeText(this, "No user is logged in.", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun EventChangeListener() {
 
