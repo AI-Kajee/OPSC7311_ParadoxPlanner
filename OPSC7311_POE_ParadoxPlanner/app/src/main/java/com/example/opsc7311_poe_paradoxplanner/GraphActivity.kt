@@ -48,41 +48,56 @@ class GraphActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 val entries = ArrayList<Entry>()
-                result.documents.forEach { document ->
-                    val userGoalProgress = document.getString("userGoalProgress")?.toFloat() ?: 0f
-                    val date = document.getString("date") ?: ""
+                Log.d(TAG, "Firebase documents retrieved: ${result.documents.size}")
+                result.documents.forEachIndexed { index, document ->
+                    try {
+                        val userGoalProgress = document.getString("userGoalProgress")?.toFloat() ?: 0f
+                        val date = document.getString("date") ?: ""
+                        Log.d(TAG, "Document ${document.id}: userGoalProgress=$userGoalProgress, date=$date")
 
-                    val dateInMillis = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(date)?.time ?: 0
-                    entries.add(Entry(dateInMillis.toFloat(), userGoalProgress))
+                        val dateInMillis = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(date)?.time ?: 0
+                        entries.add(Entry(dateInMillis.toFloat(), userGoalProgress))
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Skipping document with incorrect format: ${document.id}", e)
+                    }
                 }
-                displayGraph(entries)
+
+                Log.d(TAG, "Entries size after fetching data: ${entries.size}")
+
+                runOnUiThread {
+                    // Ensure entries are sorted by x-axis value (date in this case)
+                    entries.sortBy { it.x }
+
+                    val lineDataSet = LineDataSet(entries, "User Goal Progress")
+                    lineDataSet.color = Color.BLUE // Set your desired color here
+                    lineDataSet.setCircleColor(Color.BLACK) // Set your desired color here
+                    lineDataSet.lineWidth = 2f
+                    lineDataSet.valueTextSize = 10f
+
+                    // Set the mode to CUBIC_BEZIER or LINEAR to ensure the points are connected
+                    lineDataSet.mode = LineDataSet.Mode.LINEAR
+
+                    val lineData = LineData(lineDataSet)
+                    lineChart.data = lineData
+
+                    lineChart.description.isEnabled = false
+                    lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+                    // Formatting X axis to display date
+                    lineChart.xAxis.valueFormatter = object : ValueFormatter() {
+                        private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        override fun getFormattedValue(value: Float): String {
+                            return dateFormat.format(Date(value.toLong()))
+                        }
+                    }
+
+                    lineChart.xAxis.granularity = 1f // Ensure the axis labels are displayed properly
+                    lineChart.invalidate() // Refresh the chart
+                    Log.d(TAG, "Graph updated with ${entries.size} entries")
+                }
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Error getting documents: ", exception)
             }
-    }
-
-    private fun displayGraph(entries: ArrayList<Entry>) {
-        val lineDataSet = LineDataSet(entries, "User Goal Progress")
-        lineDataSet.color = Color.BLUE // Set your desired color here
-        lineDataSet.setCircleColor(Color.BLACK) // Set your desired color here
-        lineDataSet.lineWidth = 2f
-        lineDataSet.valueTextSize = 10f
-
-        val lineData = LineData(lineDataSet)
-        lineChart.data = lineData
-
-        lineChart.description.isEnabled = false
-        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-
-        // Formatting X axis to display date
-        lineChart.xAxis.valueFormatter = object : ValueFormatter() {
-            private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            override fun getFormattedValue(value: Float): String {
-                return dateFormat.format(Date(value.toLong()))
-            }
-        }
-
-        lineChart.invalidate() // Refresh the chart
     }
 }

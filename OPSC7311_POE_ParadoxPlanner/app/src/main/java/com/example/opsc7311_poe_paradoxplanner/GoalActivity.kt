@@ -43,8 +43,6 @@ class GoalActivity : AppCompatActivity() {
 
             // Your validation and saving code goes here...
 
-            // After saving, navigate to GraphActivity
-            startActivity(Intent(this, GraphActivity::class.java))
         }
 
         backButton.setOnClickListener {
