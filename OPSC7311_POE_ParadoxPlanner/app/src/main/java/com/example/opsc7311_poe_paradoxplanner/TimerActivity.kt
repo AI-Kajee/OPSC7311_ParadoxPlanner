@@ -148,7 +148,7 @@ class TimerActivity : AppCompatActivity() {
 
     private fun updateUserGoalProgress(elapsedTime: Double) {
         val userId = auth.currentUser?.uid
-        val currentDate=getCurrentDate()
+        val currentDate = getCurrentDate()
 
         if (userId!= null) {
             db.collection("goals").whereEqualTo("userId", userId).whereEqualTo("date", currentDate)
@@ -157,8 +157,20 @@ class TimerActivity : AppCompatActivity() {
                     if (!querySnapshot.isEmpty) {
                         val document = querySnapshot.documents.first()
                         Log.d(TimerActivity.TAG, "Document ID: ${document.id}")
+
+                        // Attempt to retrieve the userGoalProgress as a string
                         val currentUserGoalProgressStr = document.getString("userGoalProgress")?: "0.0"
-                        val currentUserGoalProgress = currentUserGoalProgressStr.toDouble()
+
+                        // Safely attempt to parse the string to a Double
+                        val currentUserGoalProgress = try {
+                            currentUserGoalProgressStr.toDouble()
+                        } catch (e: NumberFormatException) {
+                            // Handle the case where the string cannot be parsed to a Double
+                            // For example, log an error or set a default value
+                            Log.e(TimerActivity.TAG, "Failed to parse userGoalProgress: $currentUserGoalProgressStr")
+                            0.0 // Default value
+                        }
+
                         Log.d(TimerActivity.TAG, "Current User Goal Progress: $currentUserGoalProgress")
                         val updatedUserGoalProgress = currentUserGoalProgress + elapsedTime
                         Log.d(TimerActivity.TAG, "Updated User Goal Progress: $updatedUserGoalProgress")

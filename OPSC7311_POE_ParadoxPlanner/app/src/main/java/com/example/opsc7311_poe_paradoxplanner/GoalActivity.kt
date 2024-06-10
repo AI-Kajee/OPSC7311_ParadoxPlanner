@@ -62,7 +62,7 @@ class GoalActivity : AppCompatActivity() {
                             "minGoal" to minGoal,
                             "maxGoal" to maxGoal,
                             "date" to currentDate,
-                            "userGoalProgress" to userGoalProgress
+                            "userGoalProgress" to userGoalProgress.toString()
                         )
 
                         db.collection("goals").add(goalData)
