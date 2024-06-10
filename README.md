@@ -1,5 +1,3 @@
-
-
 # OPS7311 - Paradox Planner
 ## Click thumbnail below for OPSC7311 POE PART 2 Video Presentation
 [![Watch the video](https://img.youtube.com/vi/gHOKAelVpxQ/0.jpg)](https://youtu.be/gHOKAelVpxQ)
