@@ -4,72 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginbg"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="15dp"
     tools:context=".LoginActivity">
 
-    <!--    <TextView-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Login" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/email"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:hint="Enter your Email"-->
-    <!--        tools:layout_editor_absoluteX="15dp"-->
-    <!--        tools:layout_editor_absoluteY="217dp" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/password"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:hint="Enter your Password"-->
-    <!--        android:inputType="textPassword"-->
-    <!--        tools:layout_editor_absoluteX="-8dp"-->
-    <!--        tools:layout_editor_absoluteY="277dp" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/btnLogin"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Login"-->
-    <!--        tools:layout_editor_absoluteX="27dp"-->
-    <!--        tools:layout_editor_absoluteY="359dp" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/btnRegister"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Don't Have An Account?  Register"-->
-    <!--        tools:layout_editor_absoluteX="13dp"-->
-    <!--        tools:layout_editor_absoluteY="432dp" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/btnForgotPassword"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Forgot Your Password?"-->
-    <!--        tools:layout_editor_absoluteX="15dp"-->
-    <!--        tools:layout_editor_absoluteY="501dp" />-->
-
-    <!--    <ProgressBar-->
-    <!--        android:id="@+id/progressBar"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:visibility="gone" />-->
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="216dp"
         android:layout_height="228dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.308"
         app:srcCompat="@drawable/logo" />
 
     <TextView
@@ -94,27 +41,11 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.769" />
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/DHA"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Don't have an account? Click here to Register!"-->
-    <!--        android:textAlignment="center"-->
-    <!--        android:textAllCaps="false"-->
-    <!--        android:textStyle="bold|italic"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />-->
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/input_btnbg"
@@ -129,19 +60,15 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.795"
-        tools:ignore="UnknownIdInLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="228dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/input_btnbg"
         android:backgroundTint="@color/white"
         android:drawableLeft="@android:drawable/ic_secure"
@@ -154,53 +81,47 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginTop="16dp"
         android:text="Login"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.936" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:text="Don't have an account? Click here to Register!"
-        app:layout_constraintBottom_toTopOf="@+id/btnForgotPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintVertical_bias="0.459" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <Button
         android:id="@+id/btnForgotPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:text="Forgot Your Password?"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        tools:ignore="MissingConstraints" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnForgotPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

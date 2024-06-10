@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginbg"
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="159dp"
         android:layout_height="135dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnCategoryList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,57 +24,58 @@
         android:background="@drawable/rectangle_button"
         android:text="Category List"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@id/imageView5"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnGoToCategoryActivity"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
         android:text="Add Category"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCategoryList" />
+        app:layout_constraintTop_toBottomOf="@id/btnCategoryList"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnTimeSheetList"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
         android:text="Timesheet List"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoToCategoryActivity" />
+        app:layout_constraintTop_toBottomOf="@id/btnGoToCategoryActivity"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnGoToTimesheetActivity"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
         android:text="Add Timesheet"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTimeSheetList" />
+        app:layout_constraintTop_toBottomOf="@id/btnTimeSheetList"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnGoalTimer"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
         android:text="Add + View Goals"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoToTimesheetActivity" />
+        app:layout_constraintTop_toBottomOf="@id/btnGoToTimesheetActivity"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnTimer"
@@ -84,9 +85,9 @@
         android:background="@drawable/rectangle_button"
         android:text="Timer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoalTimer" />
+        app:layout_constraintTop_toBottomOf="@id/btnGoalTimer"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnGoToPieChartActivity"
@@ -96,34 +97,21 @@
         android:background="@drawable/rectangle_button"
         android:text="Goal Progress Tracker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTimer" />
+        app:layout_constraintTop_toBottomOf="@id/btnTimer"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnNoteScreen"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_button"
         android:text="Add + View Notes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoToPieChartActivity" />
-
-    <Button
-        android:id="@+id/btnLogOut"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rectangle_button"
-        android:text="Log Out"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNoteScreen" />
-
+        app:layout_constraintTop_toBottomOf="@id/btnGoToPieChartActivity"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnGraph"
@@ -133,8 +121,20 @@
         android:background="@drawable/rectangle_button"
         android:text="View Graph"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogOut" />
+        app:layout_constraintTop_toBottomOf="@id/btnNoteScreen"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rectangle_button"
+        android:text="Log Out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnGraph"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
