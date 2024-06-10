@@ -18,9 +18,12 @@ Welcome to Paradox Planner, your ultimate tool for organizing tasks, tracking ti
 
 ## Innovative/Gamification Features
 
-- **Visual Format**: Measure how well you are staying between your minimum and maximum hour goals, represented in a pie chart.
-- **Goal Completion Badges**: Unlock theme changes for the pie chart as you complete your daily goals.
-- **Interactive Pie Chart**: Rotate or tap the pie chart to enlarge the various portions, making it an interactive fidget tool.
+- ##**Visual Format**:
+- Measure how well you are staying between your minimum and maximum hour goals, represented in a pie chart.
+- ##**Goal Completion Badges**:
+- Unlock theme changes for the pie chart as you complete your daily goals.
+- ##**Interactive Pie Chart**:
+- Rotate or tap the pie chart to enlarge the various portions, making it an interactive fidget tool.
 
 ### Create Notes
 
