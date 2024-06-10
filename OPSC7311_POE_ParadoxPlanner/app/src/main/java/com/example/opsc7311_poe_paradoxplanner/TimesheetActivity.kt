@@ -277,8 +277,12 @@ class TimesheetActivity : AppCompatActivity() {
             val hours = TimeUnit.MILLISECONDS.toHours(diffInMillies)
             val minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillies) % 60
 
-            // Calculate total duration in hours
-            val totalDurationInHours = TimeUnit.MILLISECONDS.toHours(diffInMillies)
+            // Calculate total duration in hours, ensuring it's positive
+            val totalDurationInHours = if (hours < 0) {
+                TimeUnit.MILLISECONDS.toHours(-diffInMillies)
+            } else {
+                TimeUnit.MILLISECONDS.toHours(diffInMillies)
+            }
 
             return totalDurationInHours
         } else {
@@ -287,6 +291,7 @@ class TimesheetActivity : AppCompatActivity() {
             return 0L
         }
     }
+
 
 
 
@@ -311,16 +316,21 @@ class TimesheetActivity : AppCompatActivity() {
                             }
                             .addOnFailureListener { e ->
                                 Log.e(TAG, "Error updating category total hours", e)
+                                Toast.makeText(this, "Failed to update category total hours. Please try again later.", Toast.LENGTH_LONG).show()
                             }
+                    } else {
+                        Toast.makeText(this, "No category found for the given name.", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Error fetching category document", exception)
+                    Toast.makeText(this, "Failed to fetch category document. Please check your internet connection and try again.", Toast.LENGTH_LONG).show()
                 }
         } else {
             Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
         }
     }
+
 
 
 

@@ -56,8 +56,8 @@ class TimerActivity : AppCompatActivity() {
             db.collection("timesheet").whereEqualTo("userId", userId)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
-                    val timesheets = querySnapshot.documents.map { it.getString("timesheetName")?:""}
-                    val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, timesheets.toTypedArray())
+                    val timesheets = querySnapshot.documents.map { it.getString("timesheetName")!!}
+                    val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, timesheets)
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     timeSheetSpinner.adapter = adapter
                 }
