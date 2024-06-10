@@ -22,8 +22,8 @@ Welcome to Paradox Planner, your ultimate tool for organizing tasks, tracking ti
 - **Goal Completion Badges**: Unlock theme changes for the pie chart as you complete your daily goals.
 - **Interactive Pie Chart**: Rotate or tap the pie chart to enlarge the various portions, making it an interactive fidget tool.
 
-##
-**Application Icon and Final Image Assets**: The application icon serves as the visual representation of Paradox Planner on the user's device and Final image assets which include all graphical elements used within the app, such as buttons, backgrounds, and icons for various features.  
+## Application Icon and Final Image Assets
+- The application icon serves as the visual representation of Paradox Planner on the user's device and Final image assets which include all graphical elements used within the app, such as buttons, backgrounds, and icons for various features.  
 
 
 ### Create Notes
