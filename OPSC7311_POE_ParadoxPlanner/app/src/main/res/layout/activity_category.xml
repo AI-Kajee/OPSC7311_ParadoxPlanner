@@ -47,24 +47,23 @@
 
     <EditText
         android:id="@+id/editTextCategoryName"
-        android:layout_width="365dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="268dp"
+        android:layout_width="351dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="272dp"
         android:background="@drawable/input_btnbg"
         android:hint="Category Name"
         android:paddingLeft="10dp"
         android:textColor="#F6E9E9"
         android:textColorHint="#B5AEAE"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
         android:id="@+id/btnCreateCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
+        android:layout_width="219dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
         android:drawableLeft="@android:drawable/ic_menu_upload"
         android:text="Create Category"
         app:iconPadding="0dp"
@@ -92,10 +91,9 @@
         android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextCategoryName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.964"
+        app:layout_constraintVertical_bias="0.959"
         app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

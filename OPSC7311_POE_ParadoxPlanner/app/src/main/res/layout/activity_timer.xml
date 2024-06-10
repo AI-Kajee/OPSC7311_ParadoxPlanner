@@ -3,41 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@drawable/loginbg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TimerActivity">
 
 
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="128dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif-black"
+        android:text="TIMER"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <Spinner
         android:id="@+id/timeSheetSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="408dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnTimer"
-        android:layout_width="65dp"
-        android:layout_height="41dp"
+        android:layout_width="191dp"
+        android:layout_height="177dp"
+        android:layout_marginTop="120dp"
         android:text="▶"
+        android:textSize="100sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeSheetSpinner"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="273dp" />
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnBack"
-        android:layout_width="156dp"
+        android:layout_width="93dp"
         android:layout_height="48dp"
+        android:layout_marginTop="204dp"
         android:text="Back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTimer"
-        tools:layout_editor_absoluteY="380dp"
         tools:ignore="MissingConstraints" />
 
 

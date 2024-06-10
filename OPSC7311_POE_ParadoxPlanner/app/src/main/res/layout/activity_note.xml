@@ -4,13 +4,11 @@
     xmlns:tools="http://schema.android.com/tools"
     xmlns:tools2="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@drawable/loginbg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NoteActivity">
 
-    <!-- Task Name -->
-
-    <!-- Task Description -->
 
     <TextView
         android:id="@+id/tvName"
@@ -19,7 +17,6 @@
         android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-black"
         android:text="NOTES"
-        android:textColor="#D0C6D1"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

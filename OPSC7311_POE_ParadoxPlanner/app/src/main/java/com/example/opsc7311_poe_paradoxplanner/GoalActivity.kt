@@ -1,6 +1,5 @@
 package com.example.opsc7311_poe_paradoxplanner
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -17,7 +16,6 @@ class GoalActivity : AppCompatActivity() {
     private lateinit var minGoalET: EditText
     private lateinit var maxGoalET: EditText
     private lateinit var saveGoalButton: Button
-    private lateinit var backButton: Button
 
     companion object {
         private const val TAG = "Goal"
@@ -33,7 +31,6 @@ class GoalActivity : AppCompatActivity() {
         minGoalET = findViewById(R.id.etMinGoals)
         maxGoalET = findViewById(R.id.etMaxGoals)
         saveGoalButton = findViewById(R.id.btnSaveGoals)
-        backButton = findViewById(R.id.btnBack)
 
         saveGoalButton.setOnClickListener {
             Log.d(TAG, "Save Goals button clicked")
@@ -41,14 +38,35 @@ class GoalActivity : AppCompatActivity() {
             val minGoal = minGoalET.text.toString().trim()
             val maxGoal = maxGoalET.text.toString().trim()
 
-            // Your validation and saving code goes here...
+
+            if(minGoal==null || maxGoal==null){
+                Toast.makeText(this, "Please enter a minimum and maximum goal.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (minGoal == null || maxGoal == null) {
+                Toast.makeText(this, "Invalid input. Please enter numbers only.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (maxGoal.toDouble() > 24) {
+                Toast.makeText(this, "Maximum goal cannot be greater than 24.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (minGoal.toDouble() > 24) {
+                Toast.makeText(this, "Minimum goal cannot be greater than 24.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (minGoal >= maxGoal) {
+                Toast.makeText(this, "Min goal cannot be > or = to maximum goal.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+
 
         }
 
-        backButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 }

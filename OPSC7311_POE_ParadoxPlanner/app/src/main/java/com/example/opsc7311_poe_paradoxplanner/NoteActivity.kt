@@ -208,13 +208,13 @@ class NoteActivity : AppCompatActivity() {
                             .setTitle("Notes for $selectedDateString")
                             .setMultiChoiceItems(notesList.toTypedArray(), null) { _, which, isChecked ->
                                 if (isChecked) {
-                                    // Code here executes if the user selects the item
+
                                 } else {
-                                    // Code here executes if the user deselects the item
+
                                 }
                             }
                             .setPositiveButton(android.R.string.ok) { _, _ ->
-                                // Handle positive button click
+
                             }
                             .setIcon(android.R.drawable.ic_dialog_info)
                             .show()

@@ -3,7 +3,6 @@ package com.example.opsc7311_poe_paradoxplanner
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
@@ -121,8 +120,7 @@ class TimeSheetListActivity : AppCompatActivity(), TimeSheetAdapter.OnItemClickL
                             }
 
                             else{
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
+
                             }
 
                         }

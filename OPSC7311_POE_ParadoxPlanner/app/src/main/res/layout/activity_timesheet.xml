@@ -4,42 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/categoryback"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".TimesheetActivity">
 
     <EditText
         android:id="@+id/timesheetNameEditText"
+        android:textColor="#F6E9E9"
+        android:textColorHint="#B5AEAE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Name" />
 
     <EditText
         android:id="@+id/startTimeEditText"
+        android:textColor="#F6E9E9"
+        android:textColorHint="#B5AEAE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Start Time" />
 
     <EditText
         android:id="@+id/endTimeEditText"
+        android:textColor="#F6E9E9"
+        android:textColorHint="#B5AEAE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="End Time" />
 
     <EditText
         android:id="@+id/startDateEditText"
+        android:textColor="#F6E9E9"
+        android:textColorHint="#B5AEAE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Start Date" />
 
     <Spinner
         android:id="@+id/categorySpinner"
+        android:textColor="#F6E9E9"
+        android:textColorHint="#B5AEAE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/descriptionEditText"
+        android:textColor="#F6E9E9"
+        android:textColorHint="#B5AEAE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Description" />
@@ -53,8 +65,9 @@
 
     <Button
         android:id="@+id/btnUploadPicture"
-        android:layout_width="match_parent"
+        android:layout_width="155dp"
         android:layout_height="wrap_content"
+        android:drawableLeft="@android:drawable/ic_menu_upload"
         android:text="Upload Picture" />
 
     <Button
