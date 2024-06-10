@@ -64,7 +64,6 @@ class NoteActivity : AppCompatActivity() {
             val noteDescripton = tvTaskDesc.text.toString()
             val selectedDate = tvSelectDate.text.toString()
 
-
             if (noteName.isNotEmpty()) {
                 val user = auth.currentUser
                 if (user!= null) {
@@ -208,6 +207,7 @@ class NoteActivity : AppCompatActivity() {
                             .setTitle("Notes for $selectedDateString")
                             .setMultiChoiceItems(notesList.toTypedArray(), null) { _, which, isChecked ->
                                 if (isChecked) {
+                                    deleteNote(selectedDateString)
 
                                 } else {
 
@@ -245,7 +245,7 @@ class NoteActivity : AppCompatActivity() {
                         val selectedDate = document.getString("selectedDate")
 
                         // Construct a single string to represent each note
-                        val noteInfo = "$noteName - $selectedDate\n$noteDescription"
+                        val noteInfo = "$selectedDate: $noteName"
                         notesList.add(noteInfo)
                     }
                     lstNotes.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, notesList)
@@ -256,6 +256,42 @@ class NoteActivity : AppCompatActivity() {
             Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
         }
     }
+
+
+
+
+
+    private fun deleteNote(selectedDate: String) {
+        val userId = auth.currentUser?.uid
+
+        if (userId!= null) {
+            db.collection("notes").whereEqualTo("userId", userId).whereEqualTo("selectedDate", selectedDate)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        val document = querySnapshot.documents.first()
+                        Log.d(NoteActivity.TAG, "Document ID: ${document.id}")
+
+                        document.reference.delete()
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Note deleted successfully.", Toast.LENGTH_SHORT).show()
+                                fetchAllNotes()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(NoteActivity.TAG, "Error deleting note.", e)
+                            }
+                    } else {
+                        Log.w(NoteActivity.TAG, "No note found.")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(NoteActivity.TAG, "Error fetching note document", exception)
+                }
+        } else {
+            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 
 
