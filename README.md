@@ -1,10 +1,4 @@
-# OPS7311 - Paradox Planner
 
-
-Here's a summary of what I added and improved in your README:
-
-Video Thumbnail: Added a clickable YouTube video thumbnail for a more visual and interactive link to the demo video.
-Feature Descriptions: Enhanced and slightly expanded descriptions of each feature for better clarity and detail.
 
 # OPS7311 - Paradox Planner
 
